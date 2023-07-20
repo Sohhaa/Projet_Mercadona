@@ -1,11 +1,11 @@
-﻿using DTW.Repository.User;
+﻿using Mercadona.Repository.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LiveCSharpDTW052022.Controllers
+namespace Mercadona.Controllers
 {
     public class UsersController : Controller
     {

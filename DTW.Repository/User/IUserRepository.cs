@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTW.Repository.User
+namespace Mercadona.Repository.User
 {
     public interface IUserRepository
     {

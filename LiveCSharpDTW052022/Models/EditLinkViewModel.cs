@@ -1,8 +1,8 @@
-﻿using DTW.Repository.Links;
-using DTW.Repository.User;
+﻿using Mercadona.Repository.Links;
+using Mercadona.Repository.User;
 using System.Collections.Generic;
 
-namespace LiveCSharpDTW052022.Models
+namespace Mercadona.Models
 {
     public class EditLinkViewModel
     {

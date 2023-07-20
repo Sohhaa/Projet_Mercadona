@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTW.Repository.config
+namespace Mercadona.Repository.config
 {
     public class BaseRepository : IBaseRepository
     {
@@ -14,7 +14,7 @@ namespace DTW.Repository.config
         {
             var builder = new MySqlConnectionStringBuilder(
                 configuration.GetConnectionString("DefaultConnection"));
-                builder.Password = configuration["DbPassword"];
+                //builder.Password = configuration["DbPassword"];
             ConectionString = builder.ConnectionString + ";";
         }
 

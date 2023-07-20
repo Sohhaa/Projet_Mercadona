@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTW.Repository.config
+namespace Mercadona.Repository.config
 {
     public interface IBaseRepository
     {

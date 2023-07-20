@@ -1,6 +1,6 @@
 using System;
 
-namespace LiveCSharpDTW052022.Models
+namespace Mercadona.Models
 {
     public class ErrorViewModel
     {

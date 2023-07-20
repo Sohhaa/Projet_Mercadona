@@ -1,12 +1,12 @@
-﻿using DTW.Repository.config;
-using DTW.Repository.User;
+﻿using Mercadona.Repository.config;
+using Mercadona.Repository.User;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTW.Repository.User
+namespace Mercadona.Repository.User
 {
     public class UserRepository : BaseRepository, IUserRepository
     {

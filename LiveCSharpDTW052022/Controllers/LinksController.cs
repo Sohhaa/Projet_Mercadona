@@ -1,12 +1,12 @@
-﻿using DTW.Repository.Links;
-using LiveCSharpDTW052022.Models;
+﻿using Mercadona.Repository.Links;
+using Mercadona.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using DTW.Repository.User;
+using Mercadona.Repository.User;
 
-namespace LiveCSharpDTW052022.Controllers
+namespace Mercadona.Controllers
 {
     public class LinksController : Controller
     {

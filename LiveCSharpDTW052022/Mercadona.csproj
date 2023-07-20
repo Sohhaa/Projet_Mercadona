@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DTW.Repository\DTW.Repository.csproj" />
+    <ProjectReference Include="..\DTW.Repository\Mercadona.Repository.csproj" />
   </ItemGroup>
 
 </Project>

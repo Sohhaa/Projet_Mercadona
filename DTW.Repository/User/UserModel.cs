@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace DTW.Repository.User
+namespace Mercadona.Repository.User
 {
     public class UserModel
     {

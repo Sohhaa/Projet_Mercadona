@@ -2359,7 +2359,7 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
-      "DTW.Repository/1.0.0": {
+      "Mercadona.Repository/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
@@ -2367,10 +2367,10 @@
           "MySql.Data": "8.0.29"
         },
         "compile": {
-          "bin/placeholder/DTW.Repository.dll": {}
+          "bin/placeholder/Mercadona.Repository.dll": {}
         },
         "runtime": {
-          "bin/placeholder/DTW.Repository.dll": {}
+          "bin/placeholder/Mercadona.Repository.dll": {}
         }
       }
     }
@@ -7176,15 +7176,15 @@
         "system.xml.xdocument.nuspec"
       ]
     },
-    "DTW.Repository/1.0.0": {
+    "Mercadona.Repository/1.0.0": {
       "type": "project",
-      "path": "../DTW.Repository/DTW.Repository.csproj",
-      "msbuildProject": "../DTW.Repository/DTW.Repository.csproj"
+      "path": "../DTW.Repository/Mercadona.Repository.csproj",
+      "msbuildProject": "../DTW.Repository/Mercadona.Repository.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "DTW.Repository >= 1.0.0",
+      "Mercadona.Repository >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 3.1.25",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5"
     ]
@@ -7216,8 +7216,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\01 - Documents perso\\STUDI\\Examens\\Bloc 3\\Projet_Mercadona\\DTW.Repository\\DTW.Repository.csproj": {
-              "projectPath": "D:\\01 - Documents perso\\STUDI\\Examens\\Bloc 3\\Projet_Mercadona\\DTW.Repository\\DTW.Repository.csproj"
+            "D:\\01 - Documents perso\\STUDI\\Examens\\Bloc 3\\Projet_Mercadona\\DTW.Repository\\Mercadona.Repository.csproj": {
+              "projectPath": "D:\\01 - Documents perso\\STUDI\\Examens\\Bloc 3\\Projet_Mercadona\\DTW.Repository\\Mercadona.Repository.csproj"
             }
           }
         }

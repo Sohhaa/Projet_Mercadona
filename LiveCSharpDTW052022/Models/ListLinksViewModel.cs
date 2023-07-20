@@ -1,8 +1,8 @@
-﻿using DTW.Repository.Links;
+﻿using Mercadona.Repository.Links;
 using System;
 using System.Collections.Generic;
 
-namespace LiveCSharpDTW052022.Models
+namespace Mercadona.Models
 {
     public class ListLinksViewModel
     {

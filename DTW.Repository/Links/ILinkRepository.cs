@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTW.Repository.Links
+namespace Mercadona.Repository.Links
 {
     public interface ILinkRepository
     {

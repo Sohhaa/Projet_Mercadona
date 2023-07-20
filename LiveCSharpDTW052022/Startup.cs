@@ -1,6 +1,6 @@
-using DTW.Repository.config;
-using DTW.Repository.Links;
-using DTW.Repository.User;
+using Mercadona.Repository.config;
+using Mercadona.Repository.Links;
+using Mercadona.Repository.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LiveCSharpDTW052022
+namespace Mercadona
 {
     public class Startup
     {

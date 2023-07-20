@@ -1,4 +1,4 @@
-﻿using LiveCSharpDTW052022.Models;
+﻿using Mercadona.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LiveCSharpDTW052022.Controllers
+namespace Mercadona.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,10 +1,10 @@
-﻿using DTW.Repository.User;
+﻿using Mercadona.Repository.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace DTW.Repository.Links
+namespace Mercadona.Repository.Links
 {
     public class LinkModel
     {
