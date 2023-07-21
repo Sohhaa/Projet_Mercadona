@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercadona", "LiveCSharpDTW052022\Mercadona.csproj", "{90369AC7-075A-4B8B-9699-E58243B27FC6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercadona.Repository", "DTW.Repository\Mercadona.Repository.csproj", "{B1DC3653-4479-48E1-A0AA-A5A3F3D3A18C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{90369AC7-075A-4B8B-9699-E58243B27FC6} = {90369AC7-075A-4B8B-9699-E58243B27FC6}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

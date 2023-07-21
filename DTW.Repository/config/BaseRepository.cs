@@ -28,7 +28,7 @@ namespace Mercadona.Repository.config
             }
             catch(Exception ex)
             {
-                throw new Exception("Impossible de se connecter à la base de données");
+                throw new Exception("Impossible de se connecter à la base de données"+ex);
             }
         }
     }
