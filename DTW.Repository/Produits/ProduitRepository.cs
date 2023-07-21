@@ -1,5 +1,6 @@
 ﻿using Mercadona.Repository.Categorie;
 using Mercadona.Repository.config;
+using Mercadona.Repository.Promotion;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
@@ -29,10 +30,15 @@ namespace Mercadona.Repository.Produits
                     p.image,
                     c.idCategorie,
                     c.libelle as CategorieLibelle,
-                    p.idPromotion
+                    promo.idPromotion, 
+                    promo.libelle as PromotionLibelle,
+                    promo.dateDebut,
+                    promo.dateFin,
+                    promo.reduction
                 FROM 
                     produits p
                 INNER JOIN categories c ON p.idCategorie = c.idCategorie
+                LEFT JOIN promotions promo ON p.idPromotion = promo.idPromotion
                 ";
 
             //Executer la requête sql, donc créer une commande
@@ -49,6 +55,16 @@ namespace Mercadona.Repository.Produits
                     Libelle = reader["CategorieLibelle"].ToString()
                 };
 
+                PromotionModel promotion = new PromotionModel()
+                {
+                    IdPromotion = Convert.ToInt32(reader["idPromotion"]),
+                    Libelle = reader["PromotionLibelle"].ToString(),
+                    DateDebut = reader["dateDebut"].ToString(),
+                    DateFin = reader["dateFin"].ToString(),
+                    Reduction = Convert.ToInt32(reader["reduction"])
+                };
+
+
                 var leproduit = new ProduitModel(
                     Convert.ToInt32(reader["idProduit"]),
                     reader["libelle"].ToString(),
@@ -56,8 +72,7 @@ namespace Mercadona.Repository.Produits
                     (float)Convert.ToDouble(reader["prix"]),
                     reader["image"].ToString(),
                     categorie,
-                    Convert.ToInt32(reader["idPromotion"])
-
+                    promotion
                 );
 
                 listeProduits.Add(leproduit);

@@ -1,24 +1,71 @@
-﻿@model ListProduitsViewModel;
+﻿@using System.Globalization
+@model ListProduitsViewModel;
 
 @{
     ViewData["Title"] = "Catalogue";
-
 }
+
+
 
 @{
-    bool promo = false;
-    string card_promo = "";
-    if (promo) card_promo = "card-promo";
-    int i = 0;
+    DateTime dateDuJour = DateTime.Now;
+    float PrixAvecReduction = 0;
 }
-<h1>Catalogue des produits Mercadona</h1>
+
+<h1>Catalogue Mercadona</h1>
+<i>Vous trouverez ci-dessous tous les produits et les promotions proposés par Mercadona</i>
+
+
+    <form asp-controller="Catalogue" asp-action="Index" method="get" class="row mt-3">
+        <div class="col-3">
+        <select name="filtreCategorie" class="form-control">
+            <option value="0">Filtrer par catégorie</option>
+            @foreach (var categorie in Model.LstCategories)
+            {
+                if (Model.Filtre == categorie.IdCategorie){
+                    <option value="@categorie.IdCategorie" selected>@categorie.Libelle</option>
+                }else{
+                <option value="@categorie.IdCategorie">@categorie.Libelle</option>
+                }
+            }
+            </select>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+        </div>
+        <div class="col-2"></div>
+    </form>
+
+@{
+    string conjugaisonProduit = "produit";
+    if (@Model.NbProduitsTotalBdd > 1) conjugaisonProduit = "produits";
+}
+<div class="row text-center mt-2">
+    <div class="col-12">
+        <i>@Model.NbProduitsTotalBdd @conjugaisonProduit  trouvés.</i>
+    </div>
+</div>
 
 <div class="mt-3 row">
     @foreach (var produit in Model.LstProduits)
     {
-        if (i == 5 || i == 10 || i == 15 || i == 20) { promo = true; card_promo = "card-promo"; } else { promo = false; card_promo = ""; };
-        i++;
-        if (promo) card_promo = "card-promo";
+        bool promotionEnCours = false;
+        string card_promo = "";
+
+        if (produit.Promotion.IdPromotion != 1)
+        {
+            DateTime dateDebutPromo = DateTime.ParseExact(produit.Promotion.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            DateTime dateFinPromo = DateTime.ParseExact(produit.Promotion.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+
+            if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)
+            {
+                promotionEnCours = true;
+                card_promo = "card_promo";
+                PrixAvecReduction = (float)Math.Round((@produit.Prix * @produit.Promotion.Reduction / 100), 2);
+            }
+        }
+
 
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 pt-2 pb-2">
             <div class="card h-100 d-flex flex-column justify-content-center custom-card-height @card_promo ">
@@ -28,16 +75,17 @@
                     <div class="barre"></div>
                     <p class="card-text text-center">@produit.Description</p>
 
-                    
-
-                    @if (promo){
-                    <h5 class="card-title text-right pr-3" style="justify-content: right;color : #c89B3f;"><span style="text-decoration:line-through;font-size:13px;">@produit.Prix €</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="badge badge-danger" style="background-color : #ffe5e5; color:red;font-weight:bold">@produit.Prix €</span></h5>
-                    <div class="promo">-25% !</div>
-                    <h7 class="text-right " style="font-size:11px; font-style:italic;">Promotion du 15/08/2023 au 16/11/2023</h7>
+                    @if (promotionEnCours){
+                        <h5 class="text-right pr-3 prix_promotion"><span style="text-decoration:line-through;font-size:13px;">@produit.Prix €</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="" style="color:red;font-weight:bold">@PrixAvecReduction €</span></h5>
+                        <div class="promo">-@produit.Promotion.Reduction&nbsp;<i class="fa-duotone fa-percent" style="--fa-primary-color: #ff000d; --fa-secondary-color: #ff000d;"></i></div>
+                    <div class="badge detailPromo">    
+                            <h7 class="nomPromo">@produit.Promotion.Libelle</h7><br>
+                        <h7 class="datePromo">Promotion du @produit.Promotion.DateDebut au @produit.Promotion.DateFin</h7>
+                        </div>
                     }else{
-                        <h5 class="card-title text-right pr-3" style="justify-content: right;color : #c89B3f;">@produit.Prix €</h5>
+                        <h5 class="card-title text-right pr-3 prix">@produit.Prix €</h5>
                     }
-                    <p class="" style="margin:0"><span class="badge badge-light text-center" style="background-color:#fcf2de;">@produit.Categorie.Libelle</span></p>
+                    <p class="categorie_libelle"><span class="badge badge-light text-center">@produit.Categorie.Libelle</span></p>
                 </div>
             </div>
         </div>
@@ -46,7 +94,7 @@
 
 
 
-@*<div class="row m-3 tewt-center">
+<div class="row m-3 tewt-center">
     <nav class="m-auto" aria-label="...">
       <ul class="pagination">
 
@@ -54,14 +102,14 @@
         {
             <!-- Premère page -->
             <li class="page-item">
-                <a class="page-link" asp-controller="Links" asp-action="Index" asp-route-perPage="@Model.PerPage" 
+                <a class="page-link" asp-controller="Catalogue" asp-action="Index" asp-route-perPage="@Model.PerPage" 
                     asp-route-nbpage="1"
                     asp-route-search="@Model.Recherche">Première page</a>
             </li>
 
             <!-- Page Précédente -->
             <li class="page-item">
-                <a class="page-link" asp-controller="Links" asp-action="Index" asp-route-perPage="@Model.PerPage"
+                    <a class="page-link" asp-controller="Catalogue" asp-action="Index" asp-route-perPage="@Model.PerPage"
                     asp-route-nbpage="@(Model.NbPage - 1)"
                     asp-route-search="@Model.Recherche">@(Model.NbPage - 1)</a>
             </li>
@@ -81,19 +129,19 @@
         {
             <!-- Page suivante -->
             <li class="page-item">
-                <a class="page-link" asp-controller="Links" asp-action="Index" asp-route-perPage="@Model.PerPage"
+                    <a class="page-link" asp-controller="Catalogue" asp-action="Index" asp-route-perPage="@Model.PerPage"
                     asp-route-nbpage="@(Model.NbPage + 1)"
                     asp-route-search="@Model.Recherche">@(Model.NbPage + 1)</a>
             </li>
         
             <!-- Dernière page -->
             <li class="page-item">
-                <a class="page-link" asp-controller="Links" asp-action="Index" asp-route-perPage="@Model.PerPage"
+                    <a class="page-link" asp-controller="Catalogue" asp-action="Index" asp-route-perPage="@Model.PerPage"
                     asp-route-nbpage="@Model.NbPageTotal"
                     asp-route-search="@Model.Recherche">Dernière page</a>
             </li>
         }
             
       </ul>
-</nav>
-</div>*@
+    </nav>
+</div>

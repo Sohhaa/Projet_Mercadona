@@ -19,8 +19,6 @@ namespace Mercadona.Models
       //  }
         public List<CategorieModel> LstCategories { get; set; }
 
-        //public string Recherche { get; set; }
-
-
+ 
     }
 }

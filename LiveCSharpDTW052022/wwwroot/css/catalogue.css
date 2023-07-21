@@ -1,13 +1,9 @@
 ﻿.card {
-    box-shadow: 0 20px 40px -14px red
-}
-
-.card {
     box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
 }
 
-.card-promo {
-    box-shadow: 0 20px 40px -14px red !important;
+.card_promo {
+    box-shadow: 0px 10px 20px -14px red !important;
 }
 
 
@@ -21,6 +17,7 @@
     transform: translateX(-50%);
     background-color: #c89b3f;
     content: "";
+    box-shadow: 0 20px 40px -14px #c89b3f;
 }
 
 .card-text, .card-title {
@@ -31,9 +28,6 @@
     margin: 0;
 }
 
-.card-body {
-   /*border-top: 1px solid #c89b3f;*/
-}
 
 .custom-card-height {
     min-height: 400px;
@@ -45,18 +39,56 @@
 
 .promo {
     position: absolute;
-    top: -7px;
-    left: 75px;
+    top: 0px;
+    left: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
+    width: 70px;
     /*height: 45px;*/
     border-radius: 0.25rem;
     /*text-decoration : underline;*/
     font-size: 18px;
     font-weight: 700;
     color: red;
-    background-color: white;
+    background-color: #ffe5e5;
     border: 1px solid rgba(0,0,0,.125);
+}
+
+.detailPromo {
+    background-color: #ffe5e5;
+    font-size: 9px;
+    font-style: italic;
+    color: red;
+    text-align:left;
+    border-radius : 10px;
+}
+
+.nomPromo {
+    width: 100%;
+    font-weight: bold;
+}
+
+.detailPromo{
+    font-weight : lighter
+}
+
+.categorie_libelle {
+    margin: 0
+}
+
+    .categorie_libelle span {
+        background-color:#fcf2de;
+        font-weight: 500;
+    }
+
+.prix {
+    justify-content: right;
+    color: #c89B3f;
+}
+
+
+.prix_promotion {
+    justify-content: right;
+    color: #c89B3f;
 }

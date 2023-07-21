@@ -1,10 +1,8 @@
 ﻿using Mercadona.Repository.config;
-using Mercadona.Repository.Categorie;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Mercadona.Repository.Categorie
 {
@@ -24,7 +22,7 @@ namespace Mercadona.Repository.Categorie
             string sql = @"
                 SELECT 
                     c.idCategorie, 
-                    c.libelle,
+                    c.libelle
                    
                 FROM 
                     categories c

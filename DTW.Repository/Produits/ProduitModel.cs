@@ -1,4 +1,5 @@
 ﻿using Mercadona.Repository.Categorie;
+using Mercadona.Repository.Promotion;
 using Mercadona.Repository.User;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Mercadona.Repository.Produits
 
         }
 
-        public ProduitModel(int idProduit, string libelle, string description, float prix, string image, CategorieModel categorie, int idPromotion)
+        public ProduitModel(int idProduit, string libelle, string description, float prix, string image, CategorieModel categorie, PromotionModel promotion)
         {
             IdProduit = idProduit;
             Libelle = libelle;
@@ -22,7 +23,7 @@ namespace Mercadona.Repository.Produits
             Prix = prix;
             Image = image;
             Categorie = categorie;
-            IdPromotion = idPromotion;
+            Promotion = promotion;
         }
 
         public int IdProduit { get; set; }
@@ -33,7 +34,7 @@ namespace Mercadona.Repository.Produits
         public float Prix { get; set; }
         public string Image { get; set; }
         public CategorieModel Categorie { get; set; }
-        public int IdPromotion { get; set; }
+        public PromotionModel Promotion { get; set; }
 
     }
 }
