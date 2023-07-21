@@ -1,4 +1,5 @@
 ﻿using Mercadona.Repository.Produits;
+using Mercadona.Repository.Categorie;
 using Mercadona.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -8,18 +9,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Mercadona.Controllers
 {
-    public class ProduitsController : Controller
+    public class CatalogueController : Controller
     {
         private readonly IProduitRepository _produitRepository;
+        //private readonly ICategorieRepository _categorieRepository;
 
-        public ProduitsController(IProduitRepository produitRepository)
+        public CatalogueController(IProduitRepository produitRepository, ICategorieRepository categorieRepository)
         {
             _produitRepository = produitRepository;
+            //_categorieRepository = categorieRepository;
         }
 
         public IActionResult Index()
         {
             var allProduits = _produitRepository.GetAllProduits();
+            //var allCategorie = _categorieRepository.GetAllCategories();
             var vm = new ListProduitsViewModel()
             {
                 LstProduits = allProduits,

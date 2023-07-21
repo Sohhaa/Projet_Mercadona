@@ -32,7 +32,7 @@
 }
 
 .card-body {
-   /border-top: 1px solid #c89b3f;
+   /*border-top: 1px solid #c89b3f;*/
 }
 
 .custom-card-height {
@@ -51,9 +51,9 @@
     justify-content: center;
     align-items: center;
     width: 60px;
-    //height: 45px;
+    /*height: 45px;*/
     border-radius: 0.25rem;
-    // text-decoration : underline;
+    /*text-decoration : underline;*/
     font-size: 18px;
     font-weight: 700;
     color: red;

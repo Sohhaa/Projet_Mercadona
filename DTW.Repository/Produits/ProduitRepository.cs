@@ -1,4 +1,5 @@
-﻿using Mercadona.Repository.config;
+﻿using Mercadona.Repository.Categorie;
+using Mercadona.Repository.config;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
@@ -26,10 +27,12 @@ namespace Mercadona.Repository.Produits
                     p.description, 
                     p.prix,
                     p.image,
-                    p.idCategorie,
+                    c.idCategorie,
+                    c.libelle as CategorieLibelle,
                     p.idPromotion
                 FROM 
                     produits p
+                INNER JOIN categories c ON p.idCategorie = c.idCategorie
                 ";
 
             //Executer la requête sql, donc créer une commande
@@ -40,13 +43,19 @@ namespace Mercadona.Repository.Produits
             //Récupérer le retour, et le transformer en objet
             while (reader.Read())
             {
+                CategorieModel categorie = new CategorieModel()
+                {
+                    IdCategorie = Convert.ToInt32(reader["idCategorie"]),
+                    Libelle = reader["CategorieLibelle"].ToString()
+                };
+
                 var leproduit = new ProduitModel(
                     Convert.ToInt32(reader["idProduit"]),
                     reader["libelle"].ToString(),
                     reader["description"].ToString(),
                     (float)Convert.ToDouble(reader["prix"]),
                     reader["image"].ToString(),
-                    Convert.ToInt32(reader["idCategorie"]),
+                    categorie,
                     Convert.ToInt32(reader["idPromotion"])
 
                 );

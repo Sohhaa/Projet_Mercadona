@@ -1,6 +1,7 @@
 using Mercadona.Repository.config;
 using Mercadona.Repository.Links;
 using Mercadona.Repository.Produits;
+using Mercadona.Repository.Categorie;
 using Mercadona.Repository.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,7 @@ namespace Mercadona
             services.AddTransient<ILinkRepository, LinkRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IProduitRepository, ProduitRepository>();
+            services.AddTransient<ICategorieRepository, CategorieRepository>();
 
 
 
