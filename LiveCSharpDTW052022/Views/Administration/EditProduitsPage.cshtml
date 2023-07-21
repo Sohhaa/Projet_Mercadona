@@ -1,0 +1,39 @@
+﻿@model ListProduitsViewModel
+
+@{
+}
+<h1>Modifier un lien</h1>
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Libelle</th>
+            <th scope="col">Description</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Promotion</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    @foreach (var produit in Model.LstProduits)
+        {
+
+        <tr>
+            <td scope="row"><img src="@produit.Image"></td>
+            <td>@produit.Libelle</td>
+            <td>@produit.Description</td>
+            <td>@produit.Prix</td>
+            <td>@produit.Categorie.Libelle</td>
+            <td>@produit.Promotion.Libelle - @produit.Promotion.Reduction %</td>
+            <td><i class="fa-solid fa-screwdriver-wrench"></i></td>
+                <td><a asp-controller="Administration" asp-action="EditProduitsPage" asp-route-idLink="@produit.IdProduit" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
+        </tr>
+        }
+
+    </tbody>
+</table>

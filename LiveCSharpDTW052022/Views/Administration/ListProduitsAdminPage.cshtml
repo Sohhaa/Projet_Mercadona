@@ -1,0 +1,106 @@
+﻿@model ListProduitsAdminViewModel
+
+@{
+
+
+}
+<h1>Gestion des produits</h1>
+
+
+
+<table class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Libelle</th>
+            <th scope="col">Description</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Promotion</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var produit in Model.LstProduits)
+        {
+
+            <tr>
+                <td class=""><img style="width:50px;height:50px"  src="@produit.Image"></td>
+                <td style="font-weight:bold">@produit.Libelle</td>
+                <td>@produit.Description</td>
+                @if (produit.Promotion.IdPromotion != 1)
+                {
+                    float PrixAvecReduction = (float)Math.Round((@produit.Prix * @produit.Promotion.Reduction / 100), 2);
+                    <td>
+                        <span style="text-decoration:line-through">@produit.Prix €</span><br>
+                        <span style="color:red;font-weight:bold">@PrixAvecReduction €</span>
+                    </td>
+                }else{
+                <td>@produit.Prix €</td>
+                }
+                <td>@produit.Categorie.Libelle</td>
+                @if (produit.Promotion.IdPromotion != 1){
+                <td><span style="color:red;font-weight:bold">@produit.Promotion.Libelle - @produit.Promotion.Reduction %</span><br/>
+                    Du @produit.Promotion.DateDebut au @produit.Promotion.DateFin</td>
+                }else{
+                    <td>@produit.Promotion.Libelle</td>
+                }
+                <td><a asp-controller="Administration" asp-action="EditProduitsPage" asp-route-idLink="@produit.IdProduit" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<div class="row m-3 tewt-center">
+    <nav class="m-auto" aria-label="...">
+        <ul class="pagination">
+
+            @if (Model.NbPage > 1)
+            {
+                <!-- Premère page -->
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Administration" asp-action="ListProduitsAdminPage" asp-route-perPage="@Model.PerPage"
+                   asp-route-nbpage="1"
+                   asp-route-search="@Model.Recherche">Première page</a>
+                </li>
+
+                <!-- Page Précédente -->
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Administration" asp-action="ListProduitsAdminPage" asp-route-perPage="@Model.PerPage"
+                   asp-route-nbpage="@(Model.NbPage - 1)"
+                   asp-route-search="@Model.Recherche">@(Model.NbPage - 1)</a>
+                </li>
+            }
+
+
+            <!-- Page actuelle -->
+            <li class="page-item active">
+                <span class="page-link">
+                    @Model.NbPage
+                    <span class="sr-only">(actuelle)</span>
+                </span>
+            </li>
+
+
+            @if (Model.NbPageTotal > Model.NbPage)
+            {
+                <!-- Page suivante -->
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Administration" asp-action="ListProduitsAdminPage" asp-route-perPage="@Model.PerPage"
+                   asp-route-nbpage="@(Model.NbPage + 1)"
+                   asp-route-search="@Model.Recherche">@(Model.NbPage + 1)</a>
+                </li>
+
+                <!-- Dernière page -->
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Administration" asp-action="ListProduitsAdminPage" asp-route-perPage="@Model.PerPage"
+                   asp-route-nbpage="@Model.NbPageTotal"
+                   asp-route-search="@Model.Recherche">Dernière page</a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+</div>
