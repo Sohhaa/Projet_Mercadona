@@ -1,6 +1,8 @@
 ﻿using Mercadona.Repository.Categorie;
 using Mercadona.Repository.config;
+using Mercadona.Repository.Links;
 using Mercadona.Repository.Promotion;
+using Mercadona.Repository.User;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
@@ -20,25 +22,25 @@ namespace Mercadona.Repository.Produits
             //je me connecte à la bdd
             var cnn = OpenConnexion();
             //Je crée une requête sql
-            
+
             string sql = @"
-                SELECT 
+               SELECT 
                     p.idProduit, 
-                    p.libelle,
+                    p.libelle, 
                     p.description, 
-                    p.prix,
-                    p.image,
-                    c.idCategorie,
-                    c.libelle as CategorieLibelle,
-                    promo.idPromotion, 
-                    promo.libelle as PromotionLibelle,
-                    promo.dateDebut,
-                    promo.dateFin,
+                    p.prix, 
+                    p.image, 
+                    p.idCategorie,
+                    p.idPromotion,
+                    c.libelle AS categorieLibelle,
+                    promo.libelle AS promotionLibelle, 
+                    promo.dateDebut, 
+                    promo.dateFin, 
                     promo.reduction
-                FROM 
-                    produits p
-                INNER JOIN categories c ON p.idCategorie = c.idCategorie
-                LEFT JOIN promotions promo ON p.idPromotion = promo.idPromotion
+                FROM produits p
+                LEFT JOIN categories c ON p.idCategorie = c.idCategorie
+                LEFT JOIN promotions promo ON p.idPromotion = promo.idPromotion;
+
                 ";
 
             //Executer la requête sql, donc créer une commande
@@ -52,18 +54,22 @@ namespace Mercadona.Repository.Produits
                 CategorieModel categorie = new CategorieModel()
                 {
                     IdCategorie = Convert.ToInt32(reader["idCategorie"]),
-                    Libelle = reader["CategorieLibelle"].ToString()
+                    Libelle = reader["categorieLibelle"].ToString()
                 };
 
-                PromotionModel promotion = new PromotionModel()
+                PromotionModel promotion = null;
+
+                if (!reader.IsDBNull(reader.GetOrdinal("idPromotion")))
                 {
-                    IdPromotion = Convert.ToInt32(reader["idPromotion"]),
-                    Libelle = reader["PromotionLibelle"].ToString(),
-                    DateDebut = reader["dateDebut"].ToString(),
-                    DateFin = reader["dateFin"].ToString(),
-                    Reduction = Convert.ToInt32(reader["reduction"])
-                };
-
+                    promotion = new PromotionModel()
+                    {
+                        IdPromotion = Convert.ToInt32(reader["idPromotion"]),
+                        Libelle = reader["promotionLibelle"].ToString(),
+                        Reduction = Convert.ToInt32(reader["reduction"]),
+                        DateDebut = reader["dateDebut"].ToString(),
+                        DateFin = reader["dateFin"].ToString()
+                    };
+                }
 
                 var leproduit = new ProduitModel(
                     Convert.ToInt32(reader["idProduit"]),
@@ -82,8 +88,198 @@ namespace Mercadona.Repository.Produits
             return listeProduits;
         }
 
+        public ProduitModel GetProduitById(int idProduit)
+        {
+            //je me connecte à la bdd
+            var cnn = OpenConnexion();
+            //Je crée une requête sql
 
-     
+            string sql = @"
+               SELECT 
+                    p.idProduit, 
+                    p.libelle, 
+                    p.description, 
+                    p.prix, 
+                    p.image, 
+                    p.idCategorie,
+                    p.idPromotion,
+                    c.libelle AS categorieLibelle,
+                    promo.libelle AS promotionLibelle, 
+                    promo.dateDebut, 
+                    promo.dateFin, 
+                    promo.reduction
+                FROM produits p
+                LEFT JOIN categories c ON p.idCategorie = c.idCategorie
+                LEFT JOIN promotions promo ON p.idPromotion = promo.idPromotion
+                WHERE p.idProduit = @idProduit
+                ";
+
+            //Executer la requête sql, donc créer une commande
+            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@idProduit", idProduit);
+            var reader = cmd.ExecuteReader();
+            ProduitModel myProduit = null;
+
+            //Récupérer le retour, et le transformer en objet
+            if (reader.Read())
+            {
+                CategorieModel categorie = new CategorieModel()
+                {
+                    IdCategorie = Convert.ToInt32(reader["idCategorie"]),
+                    Libelle = reader["CategorieLibelle"].ToString()
+                };
+
+                PromotionModel promotion = null;
+
+                if (!reader.IsDBNull(reader.GetOrdinal("idPromotion")))
+                {
+                    promotion = new PromotionModel()
+                    {
+                        IdPromotion = Convert.ToInt32(reader["idPromotion"]),
+                        Libelle = reader["promotionLibelle"].ToString(),
+                        DateDebut = reader["dateDebut"].ToString(),
+                        DateFin = reader["dateFin"].ToString(),
+                        Reduction = Convert.ToInt32(reader["reduction"])
+                    };
+                }
+
+                myProduit = new ProduitModel(
+                    Convert.ToInt32(reader["idProduit"]),
+                    reader["libelle"].ToString(),
+                    reader["description"].ToString(),
+                    (float)Convert.ToDouble(reader["prix"]),
+                    reader["image"].ToString(),
+                    categorie,
+                    promotion
+                );
+            }
+
+            cnn.Close();
+            return myProduit;
+        }
+
+        public bool EditProduit(ProduitModel produit, int? NewIdPromotion)
+        {
+            try
+            {
+                //je me connecte à la bdd
+                var cnn = OpenConnexion();
+                //Je crée une requête sql
+
+                string sql = @"
+                UPDATE produits
+                SET 
+                    libelle = @libelle,
+                    description = @description, 
+                    prix = @prix,
+                    image = @image,
+                    idCategorie = @idCategorie,
+                    idPromotion = @idPromotion
+                WHERE 
+                    idProduit = @idProduit
+                ";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idProduit", produit.IdProduit);
+                cmd.Parameters.AddWithValue("@libelle", produit.Libelle);
+                cmd.Parameters.AddWithValue("@description", produit.Description);
+                cmd.Parameters.AddWithValue("@prix", produit.Prix);
+                cmd.Parameters.AddWithValue("@image", produit.Image);
+                cmd.Parameters.AddWithValue("@idCategorie", produit.Categorie.IdCategorie);
+
+                if (NewIdPromotion.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@idPromotion", NewIdPromotion);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@idPromotion", DBNull.Value);
+                }
+
+                var nbRowEdited = cmd.ExecuteNonQuery();
+
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erreur : {e.Message}");
+                Console.WriteLine($"StackTrace : {e.StackTrace}");
+                return false;
+            }
+        }
+
+        public bool DeleteProduit(int idProduit)
+        {
+            try
+            {
+                //je me connecte à la bdd
+                var cnn = OpenConnexion();
+                //Je crée une requête sql
+
+                string sql = @"
+                    DELETE FROM 
+                        produits
+                    WHERE 
+                        idProduit = @idProduit
+                    ";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idProduit", idProduit);
+
+                var nbRowEdited = cmd.ExecuteNonQuery();
+
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool CreateProduit(ProduitModel Produit, int idCategorie, int? idPromotion)
+        {
+            try
+            {
+                var cnn = OpenConnexion();
+
+                string sql = @"
+                    INSERT INTO produits 
+                        (libelle, description, prix, image, idCategorie, idPromotion)
+                    VALUES
+                        (@libelle, @description, @prix, @image, @idCategorie, @idPromotion)";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@libelle", Produit.Libelle);
+                cmd.Parameters.AddWithValue("@description", Produit.Description);
+                cmd.Parameters.AddWithValue("@prix", Produit.Prix);
+                cmd.Parameters.AddWithValue("@image", Produit.Image);
+                cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
+
+                if (idPromotion.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@idPromotion", idPromotion);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@idPromotion", DBNull.Value);
+                }
+
+                var reader = cmd.ExecuteNonQuery();
+
+
+                cnn.Close();
+                    return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
     }
 }

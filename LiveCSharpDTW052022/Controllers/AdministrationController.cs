@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using Mercadona.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 
 namespace Mercadona.Controllers
 {
@@ -28,7 +29,7 @@ namespace Mercadona.Controllers
             return View();
         }
 
-        public IActionResult ListProduitsAdminPage(int perPage = 24, int nbPage = 1, string search = "")
+        public IActionResult ListProduitsAdminPage(int perPage = 12, int nbPage = 1, string search = "")
         {
 
             var allproduits = _produitRepository.GetAllProduits();
@@ -62,6 +63,123 @@ namespace Mercadona.Controllers
             };
 
             return View(vm);
+        }
+
+       
+
+        public IActionResult EditProduitPage(int idProduit)
+        {
+
+            var editProduit = _produitRepository.GetProduitById(idProduit);
+            var lstCategories = _categorieRepository.GetAllCategories();
+            var LstPromotions = _promotionRepository.GetAllPromotions();
+            int? newIdPromotion = null;
+
+            var vm = new EditProduitViewModel()
+            {
+                Produit = editProduit,
+                LstCategories = lstCategories,
+                LstPromotions = LstPromotions,
+                NewIdPromotion = newIdPromotion
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult CreateProduitPage(ProduitModel Produit)
+        {
+            var lstProduits = _produitRepository.GetAllProduits();
+            var lstCategories = _categorieRepository.GetAllCategories();
+            var LstPromotions = _promotionRepository.GetAllPromotions();
+            int idCategorie = 0;
+            int? idPromotion = null;
+
+
+            var vm = new CreateProduitViewModel()
+            {
+                LstProduits = lstProduits,
+                LstCategories = lstCategories,
+                LstPromotions = LstPromotions,
+                idCategorie = idCategorie,
+                idPromotion = idPromotion
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProduit(EditProduitViewModel vm)
+        {
+            bool isOk = _produitRepository.DeleteProduit(vm.Produit.IdProduit);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "Le produit a bien été supprimé";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                vm.LstCategories = _categorieRepository.GetAllCategories();
+                vm.LstPromotions = _promotionRepository.GetAllPromotions();
+                vm.Produit = _produitRepository.GetProduitById(vm.Produit.IdProduit);
+                return View("EditProduitPage", vm);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditProduitAction(EditProduitViewModel vm, int? NewIdPromotion)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MessageErreur"] = "Erreur";
+                vm.LstCategories = _categorieRepository.GetAllCategories();
+                vm.LstPromotions = _promotionRepository.GetAllPromotions();
+                return View("EditProduitPage", vm);
+            }
+            bool isOk = _produitRepository.EditProduit(vm.Produit, NewIdPromotion);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "Le produit a bien été modifié";
+                return RedirectToAction("ListProduitsAdminPage");
+            }
+            else
+            {
+                vm.LstCategories = _categorieRepository.GetAllCategories();
+                vm.LstPromotions = _promotionRepository.GetAllPromotions();
+
+                return View("EditProduitPage", vm);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduitAction(CreateProduitViewModel vm, int idCategorie, int? idPromotion)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["MessageErreur"] = "Erreur";
+                vm.LstProduits = _produitRepository.GetAllProduits();
+                vm.LstCategories = _categorieRepository.GetAllCategories();
+                vm.LstPromotions = _promotionRepository.GetAllPromotions();
+                return View("CreateProduitPage", vm);
+            }
+
+            bool isOk = _produitRepository.CreateProduit(vm.Produit, idCategorie, idPromotion );
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "Le produit a bien été créé";
+                return RedirectToAction("ListProduitsAdminPage");
+            }
+            else
+            {
+                vm.LstProduits = _produitRepository.GetAllProduits();
+                vm.LstCategories = _categorieRepository.GetAllCategories();
+                vm.LstPromotions = _promotionRepository.GetAllPromotions();
+
+                return View("CreateProduitPage", vm);
+            }
         }
     }
 }

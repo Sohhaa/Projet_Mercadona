@@ -15,12 +15,13 @@ namespace Mercadona.Repository.Categorie
         public CategorieModel(int idCategorie, string libelle)
         {
             IdCategorie = idCategorie;
+
+            
             Libelle = libelle;
           
         }
 
         public int IdCategorie { get; set; }
-        [Required]
         public string Libelle { get; set; }
 
     }

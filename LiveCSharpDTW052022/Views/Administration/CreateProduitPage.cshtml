@@ -1,0 +1,65 @@
+﻿@model CreateProduitViewModel
+
+@{
+
+}
+
+<h1>Créer un nouveau produit</h1>
+
+
+@*<div style="color:red" class="validation-summary-errors">
+    @Html.ValidationSummary()
+</div>*@
+<form asp-controller="Administration" asp-action="CreateProduitAction">
+    <div class="form-group">
+        <label asp-for="Produit.Libelle">Nom du produit</label>
+        <input class="form-control" asp-for="Produit.Libelle">
+    </div>
+    <div class="form-group">
+        <label asp-for="Produit.Description">Description</label>
+        <input class="form-control" asp-for="Produit.Description">
+    </div>
+    <div class="form-group">
+        <label asp-for="Produit.Image">Lien de l'image</label>
+        <input class="form-control" asp-for="Produit.Image">
+        <span asp-validation-for="Produit.Image" class="text-danger"></span>
+    </div>
+        <div class="form-group">
+        <label asp-for="Produit.Prix">Prix (€)</label>
+        <input class="form-control" asp-for="Produit.Prix">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Produit.Categorie.IdCategorie">Catégorie</label>
+        <select class="form-control" asp-for="Produit.Categorie.IdCategorie">
+            @foreach (var categorie in Model.LstCategories)
+            {
+                <option value="@categorie.IdCategorie">@categorie.Libelle</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="idPromotion">Promotion</label>
+        <select class="form-control" asp-for="idPromotion">
+            <option value="">Aucune promotion</option>
+            @foreach (var promotion in Model.LstPromotions)
+            {
+                <option value="@promotion.IdPromotion">@promotion.Libelle - <span style="color:red;font-weight:bold">@promotion.Reduction %</span> - du @promotion.DateDebut au @promotion.DateFin</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Créer un produit</button>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Retourner à la liste des produits</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+

@@ -1,4 +1,5 @@
 ﻿using Mercadona.Repository.config;
+using Mercadona.Repository.Produits;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
@@ -49,7 +50,7 @@ namespace Mercadona.Repository.Categorie
         }
 
 
-        public CategorieModel GetCategorieById(int id)
+        public CategorieModel GetCategorieById(int idCategorie)
         {
             //je me connecte à la bdd
             var cnn = OpenConnexion();
@@ -67,7 +68,7 @@ namespace Mercadona.Repository.Categorie
 
             //Executer la requête sql, donc créer une commande
             MySqlCommand cmd = new MySqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@idCategorie", id);
+            cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
             var reader = cmd.ExecuteReader();
             CategorieModel maCategorie = null;
 
@@ -85,7 +86,94 @@ namespace Mercadona.Repository.Categorie
             return maCategorie;
         }
 
+        public bool CreateCategorie(string libelleCategorie)
+        {
+            try
+            {
+                var cnn = OpenConnexion();
+
+                string sql = @"
+                    INSERT INTO categories 
+                        libelle
+                    VALUES
+                        @libelleCategorie";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@libelleCategorie", libelleCategorie);
+
+                var reader = cmd.ExecuteNonQuery();
 
 
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        public bool EditCategorie(int idCategorie)
+        {
+            try
+            {
+                //je me connecte à la bdd
+                var cnn = OpenConnexion();
+                //Je crée une requête sql
+
+                string sql = @"
+                UPDATE categories
+                SET 
+                    libelle = @idCategorie,
+                WHERE 
+                    idCategorie = @idCategorie
+                ";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
+
+                var nbRowEdited = cmd.ExecuteNonQuery();
+
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erreur : {e.Message}");
+                Console.WriteLine($"StackTrace : {e.StackTrace}");
+                return false;
+            }
+        }
+
+        public bool DeleteCategorie(int idCategorie)
+        {
+            try
+            {
+                //je me connecte à la bdd
+                var cnn = OpenConnexion();
+                //Je crée une requête sql
+
+                string sql = @"
+                    DELETE FROM 
+                        categories
+                    WHERE 
+                        idCategorie = @idCategorie
+                    ";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
+
+                var nbRowEdited = cmd.ExecuteNonQuery();
+
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

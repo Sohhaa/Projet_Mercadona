@@ -52,7 +52,7 @@
         bool promotionEnCours = false;
         string card_promo = "";
 
-        if (produit.Promotion.IdPromotion != 1)
+        if (produit.Promotion != null)
         {
             DateTime dateDebutPromo = DateTime.ParseExact(produit.Promotion.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
             DateTime dateFinPromo = DateTime.ParseExact(produit.Promotion.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
@@ -77,7 +77,7 @@
 
                     @if (promotionEnCours){
                         <h5 class="text-right pr-3 prix_promotion"><span style="text-decoration:line-through;font-size:13px;">@produit.Prix €</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="" style="color:red;font-weight:bold">@PrixAvecReduction €</span></h5>
-                        <div class="promo">-@produit.Promotion.Reduction&nbsp;<i class="fa-duotone fa-percent" style="--fa-primary-color: #ff000d; --fa-secondary-color: #ff000d;"></i></div>
+                        <div class="promo">-@produit.Promotion.Reduction&nbsp;%</div>
                     <div class="badge detailPromo">    
                             <h7 class="nomPromo">@produit.Promotion.Libelle</h7><br>
                         <h7 class="datePromo">Promotion du @produit.Promotion.DateDebut au @produit.Promotion.DateFin</h7>

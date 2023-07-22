@@ -1,0 +1,75 @@
+﻿@model EditProduitViewModel
+
+@{
+
+}
+
+<h1>Modifier un produit</h1>
+
+<div style="text-align:center;height:150px;">
+    <img class="card-img-top custom-img-height" style="height:150px;width:150px;border:2px solid black" src="@Model.Produit.Image" alt="@Model.Produit.Libelle">
+</div>
+<div style="color:red" class="validation-summary-errors">
+    @Html.ValidationSummary()
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-controller="Administration" asp-action="EditProduitAction">
+            <input type="hidden" asp-for="Produit.IdProduit" />
+            <div class="form-group">
+                <label asp-for="Produit.Libelle">Nom du produit</label>
+                <input class="form-control" asp-for="Produit.Libelle">
+            </div>
+            <div class="form-group">
+                <label asp-for="Produit.Description">Description</label>
+                <input class="form-control" asp-for="Produit.Description">
+            </div>
+            <div class="form-group">
+                <label asp-for="Produit.Image">Lien de l'image</label>
+                <input class="form-control" asp-for="Produit.Image">
+                <span asp-validation-for="Produit.Image" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                <label asp-for="Produit.Prix">Prix (€)</label>
+                <input class="form-control" asp-for="Produit.Prix">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Produit.Categorie.IdCategorie">Catégorie</label>
+                <select class="form-control" asp-for="Produit.Categorie.IdCategorie">
+                    @foreach (var categorie in Model.LstCategories)
+                    {
+                        <option selected="@(categorie.IdCategorie == Model.Produit.Categorie.IdCategorie)" value="@categorie.IdCategorie">@categorie.Libelle</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewIdPromotion">Promotion</label>
+                <select class="form-control" asp-for="NewIdPromotion">
+                    <option value="">Aucune promotion</option>
+                    @foreach (var promotion in Model.LstPromotions)
+                    {
+                        if(Model.Produit.Promotion != null){
+                            <option selected="@(promotion.IdPromotion == Model.Produit.Promotion.IdPromotion)" value="@promotion.IdPromotion">@promotion.Libelle - <span style="color:red;font-weight:bold">@promotion.Reduction %</span> - du @promotion.DateDebut au @promotion.DateFin</option>
+                        }else{
+                            <option value="@promotion.IdPromotion">@promotion.Libelle - <span style="color:red;font-weight:bold">@promotion.Reduction %</span> - du @promotion.DateDebut au @promotion.DateFin</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Modifier le produit</button>
+        </form>
+    </div>
+</div>
+<br />
+<form asp-controller="Administration" asp-action="DeleteProduit">
+    <input type="hidden" asp-for="Produit.IdProduit" id="idSuppression" />
+    <button type="submit" class="btn btn-danger">Supprimer produit</button>
+</form>
+
+<div>
+    <a asp-action="Index">Retourner à la liste des produits</a>
+</div>
+

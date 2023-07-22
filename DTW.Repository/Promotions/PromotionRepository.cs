@@ -15,7 +15,7 @@ namespace Mercadona.Repository.Promotion
 
         }
 
-        public List<PromotionModel> GetAllPromotion()
+        public List<PromotionModel> GetAllPromotions()
         {
             //je me connecte à la bdd
             var cnn = OpenConnexion();
@@ -27,9 +27,7 @@ namespace Mercadona.Repository.Promotion
                     promo.libelle,
                     promo.dateDebut,
                     promo.dateFin,
-                    promo.redution,
-                    
-                   
+                    promo.reduction
                 FROM 
                     promotions promo
                 ";
@@ -70,9 +68,7 @@ namespace Mercadona.Repository.Promotion
                     promo.libelle,
                     promo.dateDebut,
                     promo.dateFin,
-                    promo.redution,
-                    
-                   
+                    promo.redution
                 FROM 
                     promotions promo
                 WHERE idPromotion = @idPromotion

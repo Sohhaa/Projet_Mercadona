@@ -4,7 +4,12 @@
 
 
 }
-<h1>Gestion des produits</h1>
+<div style="display:flex; justify-content:space-between;">
+    <h1>Gestion des produits</h1><h1 style="margin-right:50px">
+        <form asp-controller="Administration" asp-action="CreateProduitPage">
+        <button type="submit" class="btn btn-success">Créer un produit</button>
+    </form>
+    </h1></div>
 
 
 
@@ -24,12 +29,11 @@
 
         @foreach (var produit in Model.LstProduits)
         {
-
             <tr>
                 <td class=""><img style="width:50px;height:50px"  src="@produit.Image"></td>
                 <td style="font-weight:bold">@produit.Libelle</td>
                 <td>@produit.Description</td>
-                @if (produit.Promotion.IdPromotion != 1)
+                @if (produit.Promotion !=null)
                 {
                     float PrixAvecReduction = (float)Math.Round((@produit.Prix * @produit.Promotion.Reduction / 100), 2);
                     <td>
@@ -40,13 +44,13 @@
                 <td>@produit.Prix €</td>
                 }
                 <td>@produit.Categorie.Libelle</td>
-                @if (produit.Promotion.IdPromotion != 1){
+                @if (produit.Promotion != null){
                 <td><span style="color:red;font-weight:bold">@produit.Promotion.Libelle - @produit.Promotion.Reduction %</span><br/>
                     Du @produit.Promotion.DateDebut au @produit.Promotion.DateFin</td>
                 }else{
-                    <td>@produit.Promotion.Libelle</td>
+                    <td>Aucune promotion en cours</td>
                 }
-                <td><a asp-controller="Administration" asp-action="EditProduitsPage" asp-route-idLink="@produit.IdProduit" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
+                <td><a asp-controller="Administration" asp-action="EditProduitPage" asp-route-idProduit="@produit.IdProduit" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
             </tr>
         }
 
