@@ -75,7 +75,7 @@ namespace Mercadona.Controllers
             var LstPromotions = _promotionRepository.GetAllPromotions();
             int? newIdPromotion = null;
 
-            var vm = new EditProduitViewModel()
+            EditProduitViewModel vm = new EditProduitViewModel()
             {
                 Produit = editProduit,
                 LstCategories = lstCategories,
@@ -108,7 +108,7 @@ namespace Mercadona.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteProduit(EditProduitViewModel vm)
+        public IActionResult DeleteProduitAction(EditProduitViewModel vm)
         {
             bool isOk = _produitRepository.DeleteProduit(vm.Produit.IdProduit);
 
@@ -179,6 +179,99 @@ namespace Mercadona.Controllers
                 vm.LstPromotions = _promotionRepository.GetAllPromotions();
 
                 return View("CreateProduitPage", vm);
+            }
+        }
+
+        public IActionResult ListCategoriesPage()
+        {
+            var allcategories = _categorieRepository.GetAllCategories();
+
+            ListCategoriesViewModel vm = new ListCategoriesViewModel()
+            {
+                LstCategories = allcategories
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult EditCategoriePage(int idCategorie)
+        {
+
+            var editCategorie = _categorieRepository.GetCategorieById(idCategorie);
+
+            EditCategorieViewModel vm = new EditCategorieViewModel()
+            {
+                Categorie = editCategorie
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult CreateCategoriePage(CreateCategorieViewModel vm)
+        {
+            
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCategorieAction(EditCategorieViewModel vm)
+        {
+            bool isOk = _categorieRepository.DeleteCategorie(vm.Categorie.IdCategorie);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "La catégorie a bien été supprimé";
+                return RedirectToAction("ListCategoriesPage");
+            }
+            else
+            {
+                vm.LstCategories = _categorieRepository.GetAllCategories();
+                vm.Categorie = _categorieRepository.GetCategorieById(vm.Categorie.IdCategorie);
+                return View("EditCategoriePage", vm);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditCategorieAction(EditCategorieViewModel vm)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MessageErreur"] = "Erreur";
+                return View("EditCategoriePage", vm);
+            }
+            bool isOk = _categorieRepository.EditCategorie(vm.Categorie);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "La catégorie a bien été modifiée";
+                return RedirectToAction("ListCategoriesPage");
+            }
+            else
+            {
+                return View("EditCategoriePage", vm);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateCategorieAction(CreateCategorieViewModel vm, string libelleCategorie)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["MessageErreur"] = "Erreur";
+                return View("CreateCategoriePage", vm);
+            }
+
+            bool isOk = _categorieRepository.CreateCategorie(libelleCategorie);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "Le produit a bien été créé";
+                return RedirectToAction("ListCategoriesPage");
+            }
+            else
+            {
+                return View("CreateCategoriePage", vm);
             }
         }
     }

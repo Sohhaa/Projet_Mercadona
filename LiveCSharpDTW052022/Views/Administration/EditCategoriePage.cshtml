@@ -1,0 +1,35 @@
+﻿@model EditCategorieViewModel
+
+@{
+
+}
+
+<h1>Modifier la catégorie @Model.Categorie.Libelle</h1>
+
+@*<div style="color:red" class="validation-summary-errors">
+    @Html.ValidationSummary()
+</div>*@
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-controller="Administration" asp-action="EditCategorieAction">
+            <input type="hidden" asp-for="Categorie.IdCategorie" />
+            <div class="form-group">
+                <label asp-for="Categorie.Libelle">Nom de la catégorie</label>
+                <input class="form-control" asp-for="Categorie.Libelle">
+            </div>
+          
+            <button type="submit" class="btn btn-primary">Modifier la catégorie</button>
+        </form>
+    </div>
+</div>
+<br />
+<form asp-controller="Administration" asp-action="DeleteCategorieAction">
+    <input type="hidden" asp-for="Categorie.IdCategorie" id="idSuppression" />
+    <button type="submit" class="btn btn-danger">Supprimer Catégorie</button>
+</form>
+
+<div>
+    <a asp-action="ListCategoriesPage">Retourner à la liste des catégories</a>
+</div>
+

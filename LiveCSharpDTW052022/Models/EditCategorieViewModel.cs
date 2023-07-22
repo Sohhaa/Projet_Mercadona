@@ -5,8 +5,12 @@ using System.Collections.Generic;
 
 namespace Mercadona.Models
 {
-    public class AdministrationViewModel
+    public class EditCategorieViewModel
     {
+       
+        public CategorieModel Categorie { get; set; }
+        public List<CategorieModel> LstCategories { get; set; }
+
 
     }
 }

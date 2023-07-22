@@ -10,7 +10,7 @@ namespace Mercadona.Repository.Categorie
 
         public CategorieModel GetCategorieById(int idCategorie);
         public bool CreateCategorie(string libelleCategorie);
-        public bool EditCategorie(int idCategorie);
+        public bool EditCategorie(CategorieModel Categorie);
         public bool DeleteCategorie(int idCategorie);
 
         //public bool EditProduit(ProduitModel produit);

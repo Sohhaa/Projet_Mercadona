@@ -4,7 +4,7 @@
 
 }
 
-<h1>Modifier un produit</h1>
+<h1>Modifier un produit : @Model.Produit.Libelle</h1>
 
 <div style="text-align:center;height:150px;">
     <img class="card-img-top custom-img-height" style="height:150px;width:150px;border:2px solid black" src="@Model.Produit.Image" alt="@Model.Produit.Libelle">
@@ -64,7 +64,7 @@
     </div>
 </div>
 <br />
-<form asp-controller="Administration" asp-action="DeleteProduit">
+<form asp-controller="Administration" asp-action="DeleteProduitAction">
     <input type="hidden" asp-for="Produit.IdProduit" id="idSuppression" />
     <button type="submit" class="btn btn-danger">Supprimer produit</button>
 </form>

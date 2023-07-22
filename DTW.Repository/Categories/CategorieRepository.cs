@@ -59,7 +59,7 @@ namespace Mercadona.Repository.Categorie
             string sql = @"
                 SELECT 
                     c.idCategorie, 
-                    c.libelle,
+                    c.libelle
                 FROM 
                     categories c
                 WHERE 
@@ -70,12 +70,12 @@ namespace Mercadona.Repository.Categorie
             MySqlCommand cmd = new MySqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
             var reader = cmd.ExecuteReader();
-            CategorieModel maCategorie = null;
+            CategorieModel Categorie = null;
 
             //Récupérer le retour, et le transformer en objet
             if (reader.Read())
             {
-                maCategorie = new CategorieModel()
+                Categorie = new CategorieModel()
                 {
                     IdCategorie = Convert.ToInt32(reader["idCategorie"]),
                     Libelle = reader["libelle"].ToString(),
@@ -83,7 +83,7 @@ namespace Mercadona.Repository.Categorie
             }
 
             cnn.Close();
-            return maCategorie;
+            return Categorie;
         }
 
         public bool CreateCategorie(string libelleCategorie)
@@ -94,9 +94,9 @@ namespace Mercadona.Repository.Categorie
 
                 string sql = @"
                     INSERT INTO categories 
-                        libelle
+                        (libelle)
                     VALUES
-                        @libelleCategorie";
+                        (@libelleCategorie)";
 
                 //Executer la requête sql, donc créer une commande
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
@@ -113,7 +113,7 @@ namespace Mercadona.Repository.Categorie
                 return false;
             }
         }
-        public bool EditCategorie(int idCategorie)
+        public bool EditCategorie(CategorieModel Categorie)
         {
             try
             {
@@ -124,14 +124,15 @@ namespace Mercadona.Repository.Categorie
                 string sql = @"
                 UPDATE categories
                 SET 
-                    libelle = @idCategorie,
+                    libelle = @libelleCategorie
                 WHERE 
                     idCategorie = @idCategorie
                 ";
 
                 //Executer la requête sql, donc créer une commande
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
-                cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
+                cmd.Parameters.AddWithValue("@idCategorie", Categorie.IdCategorie);
+                cmd.Parameters.AddWithValue("@libelleCategorie", Categorie.Libelle);
 
                 var nbRowEdited = cmd.ExecuteNonQuery();
 
