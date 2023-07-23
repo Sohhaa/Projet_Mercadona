@@ -27,11 +27,11 @@ namespace Mercadona.Repository.Produits
         }
 
         public int IdProduit { get; set; }
-        [Required(ErrorMessage = "Merci de compléter le nom du produit.")]
+
         public string Libelle { get; set; }
-        [Required(ErrorMessage = "Merci de compléter la description du produit.")]
+
         public string Description { get; set; }
-        [Required(ErrorMessage = "Merci de compléter le prix du produit.")]
+
         public float Prix { get; set; }
         public string Image { get; set; }
         public CategorieModel Categorie { get; set; }

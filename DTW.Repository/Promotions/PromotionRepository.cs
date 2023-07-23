@@ -1,4 +1,5 @@
-﻿using Mercadona.Repository.config;
+﻿using Mercadona.Repository.Categorie;
+using Mercadona.Repository.config;
 using Mercadona.Repository.Promotion;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
@@ -56,7 +57,7 @@ namespace Mercadona.Repository.Promotion
         }
 
 
-        public PromotionModel GetPromotionById(int id)
+        public PromotionModel GetPromotionById(int idPromotion)
         {
             //je me connecte à la bdd
             var cnn = OpenConnexion();
@@ -68,7 +69,7 @@ namespace Mercadona.Repository.Promotion
                     promo.libelle,
                     promo.dateDebut,
                     promo.dateFin,
-                    promo.redution
+                    promo.reduction
                 FROM 
                     promotions promo
                 WHERE idPromotion = @idPromotion
@@ -77,7 +78,7 @@ namespace Mercadona.Repository.Promotion
 
             //Executer la requête sql, donc créer une commande
             MySqlCommand cmd = new MySqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@idPromotion", id);
+            cmd.Parameters.AddWithValue("@idPromotion", idPromotion);
             var reader = cmd.ExecuteReader();
             PromotionModel maPromotion = null;
 
@@ -98,6 +99,101 @@ namespace Mercadona.Repository.Promotion
             return maPromotion;
         }
 
+        public bool CreatePromotion(string libellePromotion, int reduction, string dateDebut, string dateFin)
+        {
+            try
+            {
+                var cnn = OpenConnexion();
+
+                string sql = @"
+                    INSERT INTO promotions
+                        (libelle, reduction, dateDebut, dateFin)
+                    VALUES
+                        (@libellePromotion, @reduction, @dateDebut, @dateFin)";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@libellePromotion", libellePromotion);
+                cmd.Parameters.AddWithValue("@reduction", reduction);
+                cmd.Parameters.AddWithValue("@dateDebut", dateDebut);
+                cmd.Parameters.AddWithValue("@dateFin", dateFin);
+
+                var reader = cmd.ExecuteNonQuery();
+
+
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        public bool EditPromotion(PromotionModel Promotion)
+        {
+            try
+            {
+                var cnn = OpenConnexion();
+
+                string sql = @"
+                UPDATE promotions
+                SET 
+                    libelle = @libellePromotion,
+                    reduction = @Reduction,
+                    dateDebut = @DateDebut,
+                    dateFin = @DateFin
+                WHERE 
+                    idPromotion = @idPromotion
+                ";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idPromotion", Promotion.IdPromotion);
+                cmd.Parameters.AddWithValue("@libellePromotion", Promotion.Libelle);
+                cmd.Parameters.AddWithValue("@Reduction", Promotion.Reduction);
+                cmd.Parameters.AddWithValue("@DateDebut", Promotion.DateDebut);
+                cmd.Parameters.AddWithValue("@DateFin", Promotion.DateFin);
+
+                var nbRowEdited = cmd.ExecuteNonQuery();
+
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erreur : {e.Message}");
+                Console.WriteLine($"StackTrace : {e.StackTrace}");
+                return false;
+            }
+        }
+
+        public bool DeletePromotion(int idPromotion)
+        {
+            try
+            {
+                var cnn = OpenConnexion();
+
+                string sql = @"
+                    DELETE FROM 
+                        promotions
+                    WHERE 
+                        idPromotion = @idPromotion
+                    ";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idPromotion", idPromotion);
+
+                var nbRowEdited = cmd.ExecuteNonQuery();
+
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
 
     }

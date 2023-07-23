@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mercadona.Repository.Categorie;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +11,8 @@ namespace Mercadona.Repository.Promotion
 
         public PromotionModel GetPromotionById(int id);
 
-        //public bool EditProduit(ProduitModel produit);
-        //public bool DeleteProduit(int id);
+        public bool CreatePromotion(string libellePromotion, int reduction, string dateDebut, string dateFin);
+        public bool EditPromotion(PromotionModel Promotion);
+        public bool DeletePromotion(int idPromotion);
     }
 }

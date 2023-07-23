@@ -20,7 +20,7 @@
             <div class="icon-part">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i><br>
                 <small>Produits</small>
-                <p>985</p>
+                <p>@Model.NombreTotalProduits</p>
             </div>
             <div class="card-content-part">
             <a asp-controller="Administration" asp-action="ListProduitsAdminPage">Gestion des produits</a>
@@ -30,10 +30,10 @@
             <div class="icon-part">
             <i class="fa fa-percent" aria-hidden="true"></i><br>
                 <small>Promotions</small>
-                <p>12</p>
+            <p>@Model.NombreTotalPromotionsEnCours</p>
             </div>
             <div class="card-content-part">
-            <a href="#">Gestion des promotions</a>
+            <a asp-controller="Administration" asp-action="ListPromotionsPage">Gestion des promotions</a>
             </div>
         </div>
       
@@ -41,13 +41,13 @@
             <div class="icon-part">
                 <i class="fa fa-tasks" aria-hidden="true"></i><br>
                 <small>Catégories</small>
-                <p>15</p>
+                <p>@Model.NombreTotalCategories</p>
             </div>
             <div class="card-content-part">
             <a asp-controller="Administration" asp-action="ListCategoriesPage">Gestion des catégories</a>
             </div>
         </div>
-        <div class="cpanel cpanel-red">
+@*        <div class="cpanel cpanel-red">
             <div class="icon-part">
                 <i class="fa fa-users" aria-hidden="true"></i><br>
                 <small>Administrateurs</small>
@@ -56,6 +56,6 @@
             <div class="card-content-part">
                 <a href="#">Gestion des administrateurs</a>
             </div>
-        </div>
+        </div>*@
         
     </div>

@@ -23,12 +23,12 @@ namespace Mercadona.Repository.Promotion
 
         public int IdPromotion { get; set; }
         public string Libelle { get; set; }
-        [Required(ErrorMessage = "Merci de définir une date de début pour la promotion.")]
+
         public string DateDebut { get; set; }
-        [Required(ErrorMessage = "Merci de définir une date de fin pour la promotion.")]
+
 
         public string DateFin { get; set; }
-        [Required(ErrorMessage = "Merci de définir un pourcentage pour la promotion.")]
+
 
         public int Reduction { get; set; }
 

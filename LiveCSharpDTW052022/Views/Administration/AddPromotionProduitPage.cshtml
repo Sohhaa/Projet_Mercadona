@@ -1,0 +1,49 @@
+﻿@model EditProduitViewModel
+
+@{
+
+}
+
+<h2>Ajouter une promotion au produit : @Model.Produit.Libelle</h2>
+
+<div style="text-align:center;height:150px;">
+    <img class="card-img-top custom-img-height" style="height:150px;width:150px;border:2px solid black" src="@Model.Produit.Image" alt="@Model.Produit.Libelle">
+</div>
+<div style="color:red" class="validation-summary-errors">
+    @Html.ValidationSummary()
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-controller="Administration" asp-action="EditProduitAction">
+            <input type="hidden" asp-for="Produit.IdProduit" />
+            <input type="hidden" asp-for="Produit.Libelle" />
+            <input type="hidden" asp-for="Produit.Description" />
+            <input type="hidden" asp-for="Produit.Prix" />
+            <input type="hidden" asp-for="Produit.Image" />
+            <input type="hidden" asp-for="Produit.Categorie.IdCategorie" />
+            <div class="form-group">
+                <label asp-for="NewIdPromotion">Promotion</label>
+                <select class="form-control" asp-for="NewIdPromotion">
+                    <option value="">Aucune promotion</option>
+                    @foreach (var promotion in Model.LstPromotions)
+                    {
+                        if(Model.Produit.Promotion != null){
+                            <option selected="@(promotion.IdPromotion == Model.Produit.Promotion.IdPromotion)" value="@promotion.IdPromotion">@promotion.Libelle - <span style="color:red;font-weight:bold">@promotion.Reduction %</span> - du @promotion.DateDebut au @promotion.DateFin</option>
+                        }else{
+                            <option value="@promotion.IdPromotion">@promotion.Libelle - <span style="color:red;font-weight:bold">@promotion.Reduction %</span> - du @promotion.DateDebut au @promotion.DateFin</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Ajouter la promotion</button>
+        </form>
+    </div>
+</div>
+<br />
+
+<div>
+    <a asp-action="ListProduitsAdminPage">Retourner à la liste des produits</a>
+</div>
+

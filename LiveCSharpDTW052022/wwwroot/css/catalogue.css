@@ -1,13 +1,13 @@
-﻿.card {
+﻿.catalogueDiv .card {
     box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
 }
 
-.card_promo {
+.catalogueDiv .card_promo {
     box-shadow: 0px 10px 20px -14px red !important;
 }
 
 
-.barre {
+.catalogueDiv .barre {
     position: absolute;
     display: block;
     width: 50px;
@@ -20,7 +20,7 @@
     box-shadow: 0 20px 40px -14px #c89b3f;
 }
 
-.card-text, .card-title {
+.catalogueDiv .card-text, catalogueDiv .card-title {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,15 +29,15 @@
 }
 
 
-.custom-card-height {
+.catalogueDiv .custom-card-height {
     min-height: 400px;
 }
 
-.custom-img-height {
+.catalogueDiv .custom-img-height {
     min-height: 150px !important;
 }
 
-.promo {
+.catalogueDiv .promo {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -55,40 +55,40 @@
     border: 1px solid rgba(0,0,0,.125);
 }
 
-.detailPromo {
+.catalogueDiv .detailPromo {
     background-color: #ffe5e5;
     font-size: 9px;
     font-style: italic;
     color: red;
-    text-align:left;
-    border-radius : 10px;
+    text-align: left;
+    border-radius: 10px;
 }
 
-.nomPromo {
+.catalogueDiv .nomPromo {
     width: 100%;
     font-weight: bold;
 }
 
-.detailPromo{
-    font-weight : lighter
+.catalogueDiv .detailPromo {
+    font-weight: lighter
 }
 
-.categorie_libelle {
+.catalogueDiv .categorie_libelle {
     margin: 0
 }
 
-    .categorie_libelle span {
-        background-color:#fcf2de;
+    .catalogueDiv .categorie_libelle span {
+        background-color: #fcf2de;
         font-weight: 500;
     }
 
-.prix {
+.catalogueDiv .prix {
     justify-content: right;
     color: #c89B3f;
 }
 
 
-.prix_promotion {
+.catalogueDiv .prix_promotion {
     justify-content: right;
     color: #c89B3f;
 }

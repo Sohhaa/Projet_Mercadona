@@ -8,7 +8,6 @@ namespace Mercadona.Models
     public class CreateCategorieViewModel
     {
         public string libelleCategorie { get; set; }
-        public List<CategorieModel> LstCategories { get; set; }
 
     }
 }

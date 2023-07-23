@@ -19,7 +19,6 @@ namespace Mercadona.Repository.Categorie
             Libelle = libelle;
           
         }
-
         public int IdCategorie { get; set; }
         public string Libelle { get; set; }
 

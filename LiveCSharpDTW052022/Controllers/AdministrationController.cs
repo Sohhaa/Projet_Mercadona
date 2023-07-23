@@ -7,6 +7,7 @@ using System;
 using Mercadona.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Mercadona.Controllers
 {
@@ -26,7 +27,37 @@ namespace Mercadona.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var allProduits = _produitRepository.GetAllProduits();
+            var allCategories = _categorieRepository.GetAllCategories();
+            var allPromotions = _promotionRepository.GetAllPromotions();
+
+            int nombreTotalProduits = allProduits.Count();
+            int nombreTotalCategories = allCategories.Count();
+
+            List<PromotionModel> LstPromotionsEnCours = new List<PromotionModel>();
+
+            DateTime dateDuJour = DateTime.Now;
+
+            foreach (var promotionEnCours in allPromotions)
+            {
+                    DateTime dateDebutPromo = DateTime.ParseExact(promotionEnCours.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    DateTime dateFinPromo = DateTime.ParseExact(promotionEnCours.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+                    if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)
+                    {
+                    LstPromotionsEnCours.Add(promotionEnCours);
+                    }
+            }
+
+            int nombreTotalPromotionsEnCours = LstPromotionsEnCours.Count();
+
+            var vm = new AdministrationViewModel()
+            {
+                NombreTotalProduits = nombreTotalProduits,
+                NombreTotalCategories = nombreTotalCategories,
+                NombreTotalPromotionsEnCours = nombreTotalPromotionsEnCours
+            };
+            return View(vm);
         }
 
         public IActionResult ListProduitsAdminPage(int perPage = 12, int nbPage = 1, string search = "")
@@ -86,6 +117,23 @@ namespace Mercadona.Controllers
             return View(vm);
         }
 
+        public IActionResult AddPromotionProduitPage(int idProduit)
+        {
+
+            var editProduit = _produitRepository.GetProduitById(idProduit);
+            var LstPromotions = _promotionRepository.GetAllPromotions();
+            int? newIdPromotion = null;
+
+            EditProduitViewModel vm = new EditProduitViewModel()
+            {
+                Produit = editProduit,
+                LstPromotions = LstPromotions,
+                NewIdPromotion = newIdPromotion
+            };
+
+            return View(vm);
+        }
+
         public IActionResult CreateProduitPage(ProduitModel Produit)
         {
             var lstProduits = _produitRepository.GetAllProduits();
@@ -97,7 +145,6 @@ namespace Mercadona.Controllers
 
             var vm = new CreateProduitViewModel()
             {
-                LstProduits = lstProduits,
                 LstCategories = lstCategories,
                 LstPromotions = LstPromotions,
                 idCategorie = idCategorie,
@@ -159,13 +206,13 @@ namespace Mercadona.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["MessageErreur"] = "Erreur";
-                vm.LstProduits = _produitRepository.GetAllProduits();
                 vm.LstCategories = _categorieRepository.GetAllCategories();
                 vm.LstPromotions = _promotionRepository.GetAllPromotions();
                 return View("CreateProduitPage", vm);
             }
 
             bool isOk = _produitRepository.CreateProduit(vm.Produit, idCategorie, idPromotion );
+
 
             if (isOk)
             {
@@ -174,7 +221,6 @@ namespace Mercadona.Controllers
             }
             else
             {
-                vm.LstProduits = _produitRepository.GetAllProduits();
                 vm.LstCategories = _categorieRepository.GetAllCategories();
                 vm.LstPromotions = _promotionRepository.GetAllPromotions();
 
@@ -225,7 +271,6 @@ namespace Mercadona.Controllers
             }
             else
             {
-                vm.LstCategories = _categorieRepository.GetAllCategories();
                 vm.Categorie = _categorieRepository.GetCategorieById(vm.Categorie.IdCategorie);
                 return View("EditCategoriePage", vm);
             }
@@ -272,6 +317,123 @@ namespace Mercadona.Controllers
             else
             {
                 return View("CreateCategoriePage", vm);
+            }
+        }
+
+
+        public IActionResult ListPromotionsPage()
+        {
+            var allPromotions = _promotionRepository.GetAllPromotions();
+
+            List<PromotionModel> allPromotionsEnCours = new List<PromotionModel>();
+            List<PromotionModel> allPromotionsTerminees = new List<PromotionModel>();
+
+            DateTime dateDuJour = DateTime.Now;
+
+            foreach (var promotion in allPromotions)
+            {
+                DateTime dateDebutPromo = DateTime.ParseExact(promotion.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dateFinPromo = DateTime.ParseExact(promotion.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+
+                if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)
+                {
+                    allPromotionsEnCours.Add(promotion);
+                }
+                else
+                {
+                    allPromotionsTerminees.Add(promotion);
+                }
+            };
+
+            ListPromotionsViewModel vm = new ListPromotionsViewModel()
+            {
+                LstPromotionsEnCours = allPromotionsEnCours,
+                LstPromotionsTerminees = allPromotionsTerminees
+            };
+           
+
+
+            return View(vm);
+        }
+
+        public IActionResult EditPromotionPage(int idPromotion)
+        {
+
+            var editPromotion = _promotionRepository.GetPromotionById(idPromotion);
+
+            EditPromotionViewModel vm = new EditPromotionViewModel()
+            {
+                Promotion = editPromotion
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult CreatePromotionPage(CreatePromotionViewModel vm)
+        {
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult DeletePromotionAction(EditPromotionViewModel vm)
+        {
+            bool isOk = _promotionRepository.DeletePromotion(vm.Promotion.IdPromotion);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "La promotion a bien été supprimée";
+                return RedirectToAction("ListPromotionsPage");
+            }
+            else
+            {
+                vm.Promotion = _promotionRepository.GetPromotionById(vm.Promotion.IdPromotion);
+                return View("EditPromotionPage", vm);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditPromotionAction(EditPromotionViewModel vm)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MessageErreur"] = "Erreur";
+                return View("EditPromotionPage", vm);
+            }
+            bool isOk = _promotionRepository.EditPromotion(vm.Promotion);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "La promotion a bien été modifiée";
+                return RedirectToAction("ListPromotionsPage");
+            }
+            else
+            {
+                return View("EditPromotionPage", vm);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreatePromotionAction(CreatePromotionViewModel vm, string libellePromotion, int reduction, string dateDebut, string dateFin)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["MessageErreur"] = "Erreur";
+                return View("CreatePromotionPage", vm);
+            }
+
+            bool isOk = _promotionRepository.CreatePromotion(libellePromotion, reduction, dateDebut, dateFin);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "La promotion a bien été créé";
+                return RedirectToAction("ListPromotionsPage");
+            }
+            else
+            {
+                return View("CreatePromotionPage", vm);
             }
         }
     }

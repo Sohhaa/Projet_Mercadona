@@ -17,7 +17,7 @@
         <table class="table table-striped" style="width:100%">
             <thead>
                 <tr>
-                    <th scope="col">Nom catégorie</th>
+                    <th scope="col">liste des catégories</th>
                     <th scope="col">&nbsp;</th>
                 </tr>
             </thead>
@@ -26,8 +26,8 @@
                 @foreach (var categorie in Model.LstCategories)
                 {
                     <tr>
-                        <td style="font-weight:bold">@categorie.Libelle</td>
-                        <td><a asp-controller="Administration" asp-action="EditCategoriePage" asp-route-idCategorie="@categorie.IdCategorie" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
+                        <td style="font-weight:bold;padding:1px">@categorie.Libelle</td>
+                        <td style="font-weight:bold;padding:3px"><a asp-controller="Administration" asp-action="EditCategoriePage" asp-route-idCategorie="@categorie.IdCategorie" style="font-weight:bold;" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
                     </tr>
                 }
 
