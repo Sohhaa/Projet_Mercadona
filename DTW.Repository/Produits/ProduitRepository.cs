@@ -240,7 +240,7 @@ namespace Mercadona.Repository.Produits
             }
         }
 
-        public bool CreateProduit(ProduitModel Produit, int idCategorie, int? idPromotion)
+        public bool CreateProduit(ProduitModel Produit, int? idPromotion)
         {
             try
             {
@@ -258,7 +258,7 @@ namespace Mercadona.Repository.Produits
                 cmd.Parameters.AddWithValue("@description", Produit.Description);
                 cmd.Parameters.AddWithValue("@prix", Produit.Prix);
                 cmd.Parameters.AddWithValue("@image", Produit.Image);
-                cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
+                cmd.Parameters.AddWithValue("@idCategorie", Produit.Categorie.IdCategorie);
 
                 if (idPromotion.HasValue)
                 {

@@ -1,10 +1,25 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿body {
+    font-family: 'Muli', Arial, sans-serif;
+}
 
+h1, h2, h3, h6 {
+    font-family: 'Playfair Display', serif;
+}
+
+.logoMercadona{
+    height:35px;
+    width : 200px;
+}
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 /* Provide sufficient contrast against white background */
@@ -19,9 +34,9 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    /*color: #fff;*/
+    color: #00ab61 !important;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
@@ -95,7 +110,7 @@ h2 {
         margin: 0 auto;
         height: 4px;
         border-radius: 1px;
-        background: #7ac400;
+        background: #00ab61;
         left: 0;
         right: 0;
         bottom: -20px;
@@ -260,4 +275,21 @@ h2 {
 .star-rating i {
     font-size: 14px;
     color: #ffc000;
+}
+.promo {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    /*height: 45px;*/
+    border-radius: 0.25rem;
+    /*text-decoration : underline;*/
+    font-size: 18px;
+    font-weight: 700;
+    color: red;
+    background-color: #ffe5e5;
+    border: 1px solid rgba(0,0,0,.125);
 }

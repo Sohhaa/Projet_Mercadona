@@ -62,7 +62,7 @@
             {
                 promotionEnCours = true;
                 card_promo = "card_promo";
-                PrixAvecReduction = (float)Math.Round((@produit.Prix * @produit.Promotion.Reduction / 100), 2);
+                PrixAvecReduction = (float)Math.Round((@produit.Prix-(@produit.Prix * @produit.Promotion.Reduction) / 100), 2);
             }
         }
 

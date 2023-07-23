@@ -38,6 +38,7 @@ namespace Mercadona.Controllers
             var allPromotions = _promotionRepository.GetAllPromotions();
 
             List<PromotionModel> LstPromotionsEnCours = new List<PromotionModel>();
+            List<PromotionModel> LstPromotionsEnCoursWithProduit = new List<PromotionModel>();
             List<ProduitModel> LstProduitWithPromotion = new List<ProduitModel>();
 
             DateTime dateDuJour = DateTime.Now;

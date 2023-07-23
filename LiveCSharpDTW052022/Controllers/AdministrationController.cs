@@ -139,7 +139,6 @@ namespace Mercadona.Controllers
             var lstProduits = _produitRepository.GetAllProduits();
             var lstCategories = _categorieRepository.GetAllCategories();
             var LstPromotions = _promotionRepository.GetAllPromotions();
-            int idCategorie = 0;
             int? idPromotion = null;
 
 
@@ -147,7 +146,6 @@ namespace Mercadona.Controllers
             {
                 LstCategories = lstCategories,
                 LstPromotions = LstPromotions,
-                idCategorie = idCategorie,
                 idPromotion = idPromotion
             };
 
@@ -201,7 +199,7 @@ namespace Mercadona.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProduitAction(CreateProduitViewModel vm, int idCategorie, int? idPromotion)
+        public IActionResult CreateProduitAction(CreateProduitViewModel vm, int? idPromotion)
         {
             if (!ModelState.IsValid)
             {
@@ -211,7 +209,7 @@ namespace Mercadona.Controllers
                 return View("CreateProduitPage", vm);
             }
 
-            bool isOk = _produitRepository.CreateProduit(vm.Produit, idCategorie, idPromotion );
+            bool isOk = _produitRepository.CreateProduit(vm.Produit, idPromotion );
 
 
             if (isOk)

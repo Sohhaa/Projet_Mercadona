@@ -6,70 +6,59 @@
 
 @{
 	float PrixAvecReduction = 0;
-	int i = 0;
+	bool promoOK = false;
 }
 
 @foreach (var promotionEnCours in Model.LstPromotionsEnCours)
 {
-@i = 0;
-<div class="row">
+	promoOK = false;
+	foreach(var prod in Model.LstProduitWithPromotion){
+		if(prod.Promotion.IdPromotion == promotionEnCours.IdPromotion){
+			promoOK = true;
+		}
+	}
+	if (promoOK){
+	<div class="row">
 		<div class="col-md-12">
-			<h2>Promotion <b> @promotionEnCours.Libelle </b></h2>
-			<div class="carousel slide myCarousel" data-ride="carousel" data-interval="0">
+				<h2><span style="font-size:12px;color:black">du @promotionEnCours.DateDebut au @promotionEnCours.DateFin</span><br /><b style="color:#01AB61"> @promotionEnCours.Libelle </b></h2>
+			<div class="carousel slide" data-ride="carousel" data-interval="0">
 				<!-- Carousel indicators -->
-				<ol class="carousel-indicators">
-					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#myCarousel" data-slide-to="1"></li>
-					<li data-target="#myCarousel" data-slide-to="2"></li>
-				</ol>
 				<div class="carousel-inner">
 					<div class="item carousel-item active">
 						<div class="row">
 				<!-- Wrapper for carousel items -->
-				
-							@foreach (var produit in Model.LstProduitWithPromotion)
-							{
-								@if (i == 4)
+				@{int i=0;}
+						@foreach (var produit in Model.LstProduitWithPromotion)
+						{
+							if(i<4)
 								{
-									<div class="carousel-inner">
-										<div class="item carousel-item active">
-											<div class="row">
-								}
-									
-								if(produit.Promotion.IdPromotion == promotionEnCours.IdPromotion)
-								{
-										PrixAvecReduction = (float)Math.Round((@produit.Prix * @produit.Promotion.Reduction / 100), 2);
-										<div class="col-sm-3">
-										<div class="thumb-wrapper">
-											<div class="img-box">
-												<img src="@produit.Image" class="img-fluid" alt="Watch">
-											</div>
-											<div class="thumb-content">
-												<h4>@produit.Libelle</h4>
-													<p class="item-price"><strike>@produit.Prix €</strike> <span>@PrixAvecReduction €</span></p>
-											</div>						
-										</div>
-									</div>
-								}
-									@if (i == 4)
+									@if (produit.Promotion.IdPromotion == promotionEnCours.IdPromotion)
 									{
-									</div>
-										</div>
+											PrixAvecReduction = (float)Math.Round((@produit.Prix-(@produit.Prix * @produit.Promotion.Reduction) / 100), 2);
+										<div class="col-sm-3">
+											<div class="thumb-wrapper" style="height:270px">
+												<div class="img-box">
+													<img src="@produit.Image" class="img-fluid" alt="Watch">
+												</div>
+												<div class="promo">-@produit.Promotion.Reduction&nbsp;%</div>
+												<div class="thumb-content">
+													<h4>@produit.Libelle</h4>
+													<p class="item-price"><strike>@produit.Prix €</strike> <span style="color:red;font-weight:bold">@PrixAvecReduction €</span></p>
+												</div>						
 											</div>
+										</div>
+										i++;
 									}
-									@i++;
-							}
-						</div>
-				</div>
+								}
+						}
 					</div>
+				</div>
+			</div>
+						
 			<!-- Carousel controls -->
-			<a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-				<i class="fa fa-angle-left"></i>
-			</a>
-			<a class="carousel-control-next" href="#myCarousel" data-slide="next">
-				<i class="fa fa-angle-right"></i>
-			</a>
+			
+			</div>
 		</div>
 	</div>
-</div>
+	}
 }

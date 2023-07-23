@@ -36,7 +36,7 @@
                 <td>@produit.Description</td>
                 @if (produit.Promotion !=null)
                 {
-                    float PrixAvecReduction = (float)Math.Round((@produit.Prix * @produit.Promotion.Reduction / 100), 2);
+                    float PrixAvecReduction = (float)Math.Round((@produit.Prix - (@produit.Prix * @produit.Promotion.Reduction) / 100), 2);
                     <td>
                         <span style="text-decoration:line-through">@produit.Prix €</span><br>
                         <span style="color:red;font-weight:bold">@PrixAvecReduction €</span>

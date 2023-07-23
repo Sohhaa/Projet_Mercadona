@@ -34,25 +34,10 @@
 }
 
 .catalogueDiv .custom-img-height {
-    min-height: 150px !important;
-}
-
-.catalogueDiv .promo {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70px;
-    /*height: 45px;*/
-    border-radius: 0.25rem;
-    /*text-decoration : underline;*/
-    font-size: 18px;
-    font-weight: 700;
-    color: red;
-    background-color: #ffe5e5;
-    border: 1px solid rgba(0,0,0,.125);
+    height: 150px !important;
+    width: 150px !important;
+    margin-left : 50px;
+    margin-top : 5px;
 }
 
 .catalogueDiv .detailPromo {

@@ -1,0 +1,23 @@
+﻿/* fonts.css */
+
+@font-face {
+    font-family: 'Muli';
+    src: url('../fonts/Muli-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Muli-Bold';
+    src: url('../fonts/Muli-Bold.ttf') format('ttf');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Muli-Italic';
+    src: url('../fonts/Muli-Italic.ttf') format('ttf');
+    font-weight: normal;
+    font-style: italic;
+}
+
