@@ -9,6 +9,9 @@
 	bool promoOK = false;
 }
 
+<h2>Bienvenue sur la catalogue en ligne de Mercadona !</h2>
+
+<div class="displayPromo">
 @foreach (var promotionEnCours in Model.LstPromotionsEnCours)
 {
 	promoOK = false;
@@ -18,6 +21,7 @@
 		}
 	}
 	if (promoOK){
+	
 	<div class="row">
 		<div class="col-md-12">
 				<h2><span style="font-size:12px;color:black">du @promotionEnCours.DateDebut au @promotionEnCours.DateFin</span><br /><b style="color:#01AB61"> @promotionEnCours.Libelle </b></h2>
@@ -62,3 +66,20 @@
 	</div>
 	}
 }
+</div>
+<div class="infoEntreprise">
+		<h2 style="text-align:left;"> Qu'est-ce que Mercadona ?</h2>
+
+		<blockquote class="infoMercadona"><strong>Un projet de transformation partagé, durable et constant dont la société veut exister, se sentir fière et avoir le client comme fil conducteur.</strong></blockquote>
+
+		<hr />
+		<div style="padding-left:3%;padding-right:3%"><p>Mercadona, une entreprise familiale, est l'une des principales entreprises de supermarchés physiques et de vente en ligne en Espagne. <br />
+		Son objectif est d'être responsable de proposer au client la meilleure option pour satisfaire ses attentes.<br />
+		Grâce à cela, 5,7 millions de foyers font chaque jour <strong>confiance</strong> à l'entreprise.
+		</p>
+		<p>
+		Créé en 1977 par le groupe Cárnicas Roig, il compte actuellement 1 628 magasins en Espagne et 42 au Portugal, et a un effectif de 99 000 employés qui recherchent l'excellence, dont 3 500 au Portugal.
+		</p>
+		</div>
+
+</div>

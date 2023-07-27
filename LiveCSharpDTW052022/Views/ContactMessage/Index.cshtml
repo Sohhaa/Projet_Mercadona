@@ -1,0 +1,72 @@
+﻿@using System.Globalization
+@model ContactMessageViewModel;
+
+
+@{
+    ViewData["Title"] = "Formulaire de contact";
+}
+
+<div class="infoContact">
+    <h2>Nous contacter</h2>
+    <p>
+        Si vous avez besoin de contacter notre service consommateur pour poser des questions, obtenir de l'aide ou fournir des commentaires,
+        nous sommes là pour vous assister. Voici comment vous pouvez nous contacter :
+    </p><ul>
+
+        <li>
+            <i class="fa-solid fa-phone"></i><strong>  Service client par téléphone </strong><br /> Vous pouvez appeler notre service clientèle au numéro suivant : +34 972 67 20 13.
+            Nos représentants du service client seront heureux de répondre à vos questions et de vous fournir l'assistance nécessaire.
+            <br />
+        </li>
+
+
+        <li>
+            <i class="fa-solid fa-envelope"></i><strong>  Service client par e-mail </strong><br /> Vous pouvez nous envoyer un e-mail à contact@merccadona.es. Expliquez clairement votre demande
+            ou votre préoccupation dans l'e-mail et notre équipe du service client vous répondra dans les plus brefs délais.
+            <br />
+        </li>
+
+
+        <li>
+            <i class="fa-solid fa-list"></i><strong> Formulaire de contact en bas de la page </strong><br /> Vous pouvez également utiliser le formulaire de contact disponible en bas de cette page.
+            Remplissez les informations requises et décrivez votre demande ou votre question. Notre équipe du service client traitera votre demande dès que possible.
+            <br />
+        </li>
+
+    </ul>
+    <p>
+        Nous nous efforçons de fournir un excellent service client et nous sommes là pour vous aider. N'hésitez pas à nous contacter
+        si vous avez des préoccupations, des questions ou des commentaires concernant notre site web du catalogue de produits et promotions Mercadona.
+        Votre satisfaction est notre priorité, et nous ferons tout notre possible pour vous fournir l'assistance dont vous avez besoin.
+    </p>
+</div>
+<HR>
+<div>
+<h2>Formulaire de contact</h2>
+
+
+<form asp-controller="ContactMessage" asp-action="SendContactMessage">
+    <div class="form-group">
+        <label asp-for="ContactMessage.FirstName">Votre Prénom</label>
+        <input class="form-control" asp-for="ContactMessage.FirstName">
+    </div>
+    <div class="form-group">
+        <label asp-for="ContactMessage.LastName">Votre nom</label>
+        <input class="form-control" asp-for="ContactMessage.LastName">
+    </div>
+    <div class="form-group">
+        <label asp-for="ContactMessage.Email">Votre e-mail</label>
+        <input class="form-control" asp-for="ContactMessage.Email">
+    </div>
+      <div class="form-group">
+        <label asp-for="ContactMessage.Message">Votre Message</label>
+        <input class="form-control" asp-for="ContactMessage.Message">
+    </div>
+   
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+    </div>
+</form>
+
+</div>
+

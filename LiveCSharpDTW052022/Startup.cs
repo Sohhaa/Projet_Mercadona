@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mercadona.Repository.Promotion;
+using Mercadona.Repository.ContactMessage;
 
 namespace Mercadona
 {
@@ -36,6 +37,7 @@ namespace Mercadona
             services.AddTransient<IProduitRepository, ProduitRepository>();
             services.AddTransient<ICategorieRepository, CategorieRepository>();
             services.AddTransient<IPromotionRepository, PromotionRepository>();
+            services.AddTransient<IContactMessageRepository, ContactMessageRepository>();
 
 
 

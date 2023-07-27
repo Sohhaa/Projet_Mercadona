@@ -293,3 +293,57 @@ h2 {
     background-color: #ffe5e5;
     border: 1px solid rgba(0,0,0,.125);
 }
+
+.displayPromo {
+    background-size: cover;
+    background-position: center center;
+    /*background-image: url("https://media.istockphoto.com/id/152535651/fr/photo/cubes-de-rouge-avec-signe-de-pour-cent.jpg?s=612x612&w=0&k=20&c=3Mw972COwRfV4ZzYyDVrS7Z7bICnoA7LzV64ckPX32M=");*/
+}
+
+.infoEntreprise {
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-left:10%;
+    margin-right:10%;
+
+    border: 1px solid #04593C;
+}
+
+    .infoEntreprise h2::after {
+        content: "";
+        width: 100px;
+        position: absolute;
+        margin: 0 auto;
+        height: 4px;
+        border-radius: 1px;
+        background: #00ab61;
+        left: -50% !important;
+        right: 0 !important;
+        bottom: -20px;
+    }
+
+.infoMercadona {
+    border-left: 2px solid #04593C;
+    padding-left: 2%;
+    margin-left: 2%;
+}
+
+
+.infoContact {
+    list-style-type: none;
+    padding: 1% 10% 2% 10%;
+    text-align: justify;
+}
+
+.infoContact ul{
+    list-style-type: none;
+}
+
+.infoContact ul li {
+    padding-top: 3%;
+}
+
+.infoContact ul li:first-child {
+   padding-top: 0%;
+}
+
