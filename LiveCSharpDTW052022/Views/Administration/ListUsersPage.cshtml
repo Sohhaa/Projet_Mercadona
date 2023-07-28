@@ -1,0 +1,43 @@
+﻿@model ListUsersViewModel
+
+@{
+
+
+}
+<div style="display:flex; justify-content:space-between;">
+    <h1>Gestion des Utilisateurs</h1><h1 style="margin-right:50px">
+        <form asp-controller="Administration" asp-action="CreateUserPage">
+            <button type="submit" class="btn btn-success">Créer un utilisateur</button>
+        </form>
+    </h1>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped" style="width:100%">
+            <thead>
+                <tr style="text-align:center;">
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var user in Model.LstUsers)
+                {
+                    <tr style="text-align:center;">
+                        <td style="font-weight:bold;padding:1px">@user.FirstName</td>
+                        <td style="font-weight:bold;padding:1px">@user.LastName</td>
+                        <td style="font-weight:bold;padding:1px">@user.Email</td>
+                        <td style="font-weight:bold;padding:3px"><a asp-controller="Administration" asp-action="EditUserPage" asp-route-idPromotion="@user.IdUser" style="font-weight:bold;" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

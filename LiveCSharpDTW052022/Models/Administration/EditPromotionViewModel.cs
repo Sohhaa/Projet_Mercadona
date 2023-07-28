@@ -1,7 +1,7 @@
 ﻿using Mercadona.Repository.Promotion;
 using System.Collections.Generic;
 
-namespace Mercadona.Models
+namespace Mercadona.Models.Administration
 {
     public class EditPromotionViewModel
     {

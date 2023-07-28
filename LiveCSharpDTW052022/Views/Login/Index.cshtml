@@ -1,0 +1,33 @@
+﻿@using Mercadona.Models.Login
+@model LoginViewModel;
+
+
+@{
+    ViewData["Title"] = "Se connecter";
+}
+
+<h2>Se connecter</h2>
+
+<div style="color:red" class="validation-summary-errors">
+    @Html.ValidationSummary()
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Login" asp-action="ConnectUser">
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input class="form-control" asp-for="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Mot de passe</label>
+                <input class="form-control" asp-for="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </div>
+        </form>
+    </div>
+</div>

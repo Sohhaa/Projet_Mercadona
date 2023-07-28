@@ -4,10 +4,11 @@ using Mercadona.Repository.Promotion;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System;
-using Mercadona.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Globalization;
+using Mercadona.Repository.User;
+using Mercadona.Models.Administration;
+using Mercadona.Models;
 
 namespace Mercadona.Controllers
 {
@@ -17,12 +18,15 @@ namespace Mercadona.Controllers
         private readonly IProduitRepository _produitRepository;
         private readonly ICategorieRepository _categorieRepository;
         private readonly IPromotionRepository _promotionRepository;
+        private readonly IUserRepository _userRepository;
 
-        public AdministrationController(IProduitRepository produitRepository, ICategorieRepository categorieRepository, IPromotionRepository promotionRepository)
+
+        public AdministrationController(IProduitRepository produitRepository, ICategorieRepository categorieRepository, IPromotionRepository promotionRepository, IUserRepository userRepository)
         {
             _produitRepository = produitRepository;
             _categorieRepository = categorieRepository;
             _promotionRepository = promotionRepository;
+            _userRepository = userRepository;
         }
 
         public IActionResult Index()
@@ -434,5 +438,106 @@ namespace Mercadona.Controllers
                 return View("CreatePromotionPage", vm);
             }
         }
+
+        //  ------------------------- USER ADMINISTRATION-------------------
+
+        public IActionResult ListUsersPage()
+        {
+            var allUsers = _userRepository.GetAllUsers();
+
+            List<UserModel> allUser = new List<UserModel>();
+
+       
+            ListUsersViewModel vm = new ListUsersViewModel()
+            {
+                LstUsers = allUsers,
+            };
+
+
+
+            return View(vm);
+        }
+
+        public IActionResult EditUserPage(int idUser)
+        {
+
+            var editUser = _userRepository.GetUserById(idUser);
+
+            EditUserViewModel vm = new EditUserViewModel()
+            {
+                User = editUser
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult CreateUserPage(CreateUserViewModel vm)
+        {
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUserAction(EditUserViewModel vm)
+        {
+            bool isOk = _userRepository.DeleteUser(vm.User.IdUser);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "L'utilisateur a bien été supprimé";
+                return RedirectToAction("ListUsersPage");
+            }
+            else
+            {
+                vm.User = _userRepository.GetUserById(vm.User.IdUser);
+                return View("EditUserPage", vm);
+            }
+        }
+
+
+        [HttpPost]
+        public IActionResult EditUserAction(EditUserViewModel vm)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MessageErreur"] = "Erreur";
+                return View("EditUserPage", vm);
+            }
+            bool isOk = _userRepository.EditUser(vm.User);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "L'utilisateur a bien été modifié";
+                return RedirectToAction("ListUsersPage");
+            }
+            else
+            {
+                return View("EditUserPage", vm);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateUserAction(CreateUserViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["MessageErreur"] = "Erreur";
+                return View("CreateUserPage", vm);
+            }
+            bool isOk = _userRepository.CreateUser(vm.User);
+
+            if (isOk)
+            {
+                TempData["MessageValidation"] = "L'utilisateur a bien été créé";
+                return RedirectToAction("ListUsersPage");
+            }
+            else
+            {
+                return View("CreateUserPage", vm);
+            }
+        }
+
+
     }
 }

@@ -1,0 +1,53 @@
+﻿@model CreateUserViewModel
+
+@{
+
+}
+
+<h1>Créer un nouvel utilisateur</h1>
+
+
+<div style="color:red" class="validation-summary-errors">
+    @Html.ValidationSummary()
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Administration" asp-action="CreateUserAction">
+            <div class="form-group">
+                <label asp-for="User.FirstName">Nom</label>
+                <input class="form-control" asp-for="User.FirstName">
+                <span asp-validation-for="User.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.LastName">Prénom</label>
+                <input class="form-control" asp-for="User.LastName">
+                <span asp-validation-for="User.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Email">Email</label>
+                <input class="form-control" asp-for="User.Email">
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Password">Mot de passe</label>
+                <input class="form-control" asp-for="User.Password">
+                <span asp-validation-for="User.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Créer un utilisateur</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListUsersPage">Retourner à la liste des utilisateurs</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+

@@ -3,7 +3,7 @@ using Mercadona.Repository.Produits;
 using System;
 using System.Collections.Generic;
 
-namespace Mercadona.Models
+namespace Mercadona.Models.Catalogue
 {
     public class ListProduitsViewModel
     {
@@ -15,7 +15,7 @@ namespace Mercadona.Models
         {
             get
             {
-                return Convert.ToInt16(Math.Ceiling(((decimal)NbProduitsTotalBdd / PerPage)));
+                return Convert.ToInt16(Math.Ceiling((decimal)NbProduitsTotalBdd / PerPage));
             }
         }
         public List<ProduitModel> LstProduits { get; set; }

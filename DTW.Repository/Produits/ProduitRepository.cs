@@ -1,8 +1,6 @@
 ﻿using Mercadona.Repository.Categorie;
 using Mercadona.Repository.config;
-using Mercadona.Repository.Links;
 using Mercadona.Repository.Promotion;
-using Mercadona.Repository.User;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;

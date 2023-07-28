@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Mercadona.Repository.Promotion;
+using Mercadona.Models.Catalogue;
 
 namespace Mercadona.Controllers
 {

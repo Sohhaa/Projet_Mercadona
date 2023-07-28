@@ -1,11 +1,10 @@
 ﻿using Mercadona.Repository.Categorie;
-using Mercadona.Repository.Links;
 using Mercadona.Repository.Produits;
 using Mercadona.Repository.Promotion;
 using System;
 using System.Collections.Generic;
 
-namespace Mercadona.Models
+namespace Mercadona.Models.Administration
 {
     public class ListProduitsAdminViewModel
     {
@@ -20,7 +19,7 @@ namespace Mercadona.Models
         {
             get
             {
-                return Convert.ToInt16(Math.Ceiling(((decimal)NbProduitsTotalBdd / PerPage)));
+                return Convert.ToInt16(Math.Ceiling((decimal)NbProduitsTotalBdd / PerPage));
             }
         }
         public string Recherche { get; set; }

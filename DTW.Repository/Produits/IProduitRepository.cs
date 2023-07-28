@@ -1,9 +1,9 @@
-﻿using Mercadona.Repository.Links;
+﻿using Mercadona.Repository.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Mercadona.Repository.Produits
+namespace Mercadona.Repository.Produits 
 {
     public interface IProduitRepository
     {

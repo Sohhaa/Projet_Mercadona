@@ -1,5 +1,4 @@
 using Mercadona.Repository.config;
-using Mercadona.Repository.Links;
 using Mercadona.Repository.Produits;
 using Mercadona.Repository.Categorie;
 using Mercadona.Repository.User;
@@ -32,13 +31,11 @@ namespace Mercadona
         {
 
             services.AddTransient<IBaseRepository, BaseRepository>();
-            services.AddTransient<ILinkRepository, LinkRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IProduitRepository, ProduitRepository>();
             services.AddTransient<ICategorieRepository, CategorieRepository>();
             services.AddTransient<IPromotionRepository, PromotionRepository>();
             services.AddTransient<IContactMessageRepository, ContactMessageRepository>();
-
+            services.AddTransient<IUserRepository, UserRepository>();
 
 
             services.AddControllersWithViews();

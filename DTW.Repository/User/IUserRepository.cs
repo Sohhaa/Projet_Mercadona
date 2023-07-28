@@ -7,7 +7,10 @@ namespace Mercadona.Repository.User
     public interface IUserRepository
     {
         public List<UserModel> GetAllUsers();
-        public UserModel GetById(int id);
-        public void CreateUser(UserModel user);
+        public UserModel GetUserById(int id);
+        public bool DeleteUser(int id);
+        public bool EditUser(UserModel User);
+        public bool CreateUser(UserModel User);
+        public UserModel GetUserByEmail(string email);
     }
 }

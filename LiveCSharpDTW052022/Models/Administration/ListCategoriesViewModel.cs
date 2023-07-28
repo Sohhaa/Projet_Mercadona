@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mercadona.Models
+namespace Mercadona.Models.Administration
 {
     public class ListCategoriesViewModel
     {
-      
+
         public List<CategorieModel> LstCategories { get; set; }
 
     }

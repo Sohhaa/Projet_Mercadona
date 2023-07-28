@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mercadona.Repository.ContactMessage;
 
-namespace Mercadona.Models
+namespace Mercadona.Models.ContactMessage
 {
-	public class ContactMessageViewModel
-	{
+    public class ContactMessageViewModel
+    {
         public ContactMessageModel ContactMessage { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
