@@ -1,0 +1,8 @@
+﻿@using Mercadona.Models;
+
+@if (User.Identity.IsAuthenticated)
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-area="" asp-controller="Administration" asp-action="Index" style="color:#00ab61 !important" ;>Administration</a>
+    </li>
+}

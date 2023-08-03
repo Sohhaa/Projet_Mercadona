@@ -9,6 +9,7 @@ namespace Mercadona.Models
     {
         public List<PromotionModel> LstPromotionsEnCours { get; set; }
         public List<PromotionModel> LstPromotionsTerminees { get; set; }
+        public List<PromotionModel> LstPromotionsFutures { get; set; }
 
     }
 }

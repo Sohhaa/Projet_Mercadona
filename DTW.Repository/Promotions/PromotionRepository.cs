@@ -99,7 +99,7 @@ namespace Mercadona.Repository.Promotion
             return maPromotion;
         }
 
-        public bool CreatePromotion(string libellePromotion, int reduction, string dateDebut, string dateFin)
+        public bool CreatePromotion(PromotionModel Promotion)
         {
             try
             {
@@ -113,10 +113,10 @@ namespace Mercadona.Repository.Promotion
 
                 //Executer la requête sql, donc créer une commande
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
-                cmd.Parameters.AddWithValue("@libellePromotion", libellePromotion);
-                cmd.Parameters.AddWithValue("@reduction", reduction);
-                cmd.Parameters.AddWithValue("@dateDebut", dateDebut);
-                cmd.Parameters.AddWithValue("@dateFin", dateFin);
+                cmd.Parameters.AddWithValue("@libellePromotion", Promotion.Libelle);
+                cmd.Parameters.AddWithValue("@reduction", Promotion.Reduction);
+                cmd.Parameters.AddWithValue("@dateDebut", Promotion.DateDebut);
+                cmd.Parameters.AddWithValue("@dateFin", Promotion.DateFin);
 
                 var reader = cmd.ExecuteNonQuery();
 

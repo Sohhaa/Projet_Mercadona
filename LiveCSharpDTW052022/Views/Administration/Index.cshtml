@@ -1,21 +1,13 @@
-﻿@    using System.Globalization
-@model AdministrationViewModel;
-
+﻿@model AdministrationViewModel;
 @{
     ViewData["Title"] = "Administration";
-}
-
-
-
-@{
-    DateTime dateDuJour = DateTime.Now;
 }
 
 <h1>Page d'administration</h1>
 <i>Vous êtes sur cette page en tant qu'administrateur du site Mercadona.</i><br />
 <i>Vous pouvez ajouter, éditer et supprimer des produits, des promotions & des catégories.</i>
 
-    <div class="main-part">
+<div class="main-part">
         <div class="cpanel">
             <div class="icon-part">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i><br>
@@ -47,15 +39,14 @@
             <a asp-controller="Administration" asp-action="ListCategoriesPage">Gestion des catégories</a>
             </div>
         </div>
-@*        <div class="cpanel cpanel-red">
+        <div class="cpanel cpanel-red">
             <div class="icon-part">
                 <i class="fa fa-users" aria-hidden="true"></i><br>
-                <small>Administrateurs</small>
-                <p>3</p>
+                <small>Utilisateurs</small>
+                <p>@Model.NombreTotalUsers</p>
             </div>
             <div class="card-content-part">
-                <a href="#">Gestion des administrateurs</a>
+            <a asp-controller="Administration" asp-action="ListUsersPage">Gestion des utilisateurs</a>
             </div>
-        </div>*@
-        
-    </div>
+        </div>  
+</div>

@@ -29,7 +29,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1" >
+                    <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" style="color:#00ab61 !important;">Accueil</a>
                         </li>
@@ -37,17 +37,20 @@
                             <a class="nav-link" asp-area="" asp-controller="Catalogue" asp-action="Index" style="color:#00ab61 !important" ;>Catalogue</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="ContactMessage" asp-action="Index" style="color:#00ab61 !important" ;>Formulaire de contact</a>
+                            <a class="nav-link" asp-area="" asp-controller="ContactMessage" asp-action="Index" style="color:#00ab61 !important" ;>Contact</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Administration" asp-action="Index" style="color:#00ab61 !important" ;>Administration</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Index" style="color:#00ab61 !important" ;>Login</a>
-                        </li>
+                        @await Component.InvokeAsync("NavBar")
                     </ul>
                 </div>
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="nav-item" style="text-align:right">
+                    <span class="nav-link">Bienvenue, @User.Identity.Name <a asp-area="" asp-controller="Login" asp-action="Logout" style="font-size:11px" ;>Se déconnecter</a></span>
+          
+                    
+                </div>
+            }
         </nav>
     </header>
     <div class="container">
@@ -58,7 +61,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - Mercadona | <href url="https://www.studi.com/fr">Studi</href> - Maxime GOURDON -  <a asp-area="" asp-controller="ContactMessage" asp-action="Index">Nous contacter</a>
+            &copy; 2023 - Mercadona | <href url="https://www.studi.com/fr">Studi</href> - Maxime GOURDON -  <a asp-area="" asp-controller="ContactMessage" asp-action="Index">Nous contacter</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Mentions légales</a>
         </div>
     </footer>
      

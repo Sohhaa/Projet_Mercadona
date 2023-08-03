@@ -17,18 +17,22 @@
             <div class="form-group">
                 <label asp-for="Promotion.Libelle">Nom de la promotion</label>
                 <input class="form-control" asp-for="Promotion.Libelle">
+                <span asp-validation-for="Promotion.Libelle" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Promotion.Reduction">Pourcentage de réduction</label>
                 <input class="form-control" asp-for="Promotion.Reduction">
+                <span asp-validation-for="Promotion.Reduction" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Promotion.DateDebut">Date de début de la promotion</label>
                 <input class="form-control datepicker" asp-for="Promotion.DateDebut">
+                <span asp-validation-for="Promotion.DateDebut" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Promotion.DateFin">Date de fin de la promotion</label>
                 <input class="form-control datepicker" asp-for="Promotion.DateFin">
+                <span asp-validation-for="Promotion.DateFin" class="text-danger"></span>
             </div>
           
             <button type="submit" class="btn btn-primary">Modifier la promotion</button>

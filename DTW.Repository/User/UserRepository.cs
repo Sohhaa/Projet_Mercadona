@@ -64,10 +64,10 @@ namespace Mercadona.Repository.User
 
             string sql = @"
                     SELECT 
-                        idUser,
-                        firstName,
-                        lastName,
-                        email
+                        iduser,
+                        email,
+                        password,
+                        salt
                     FROM 
                         users
                     WHERE 
@@ -85,10 +85,10 @@ namespace Mercadona.Repository.User
             {
                 User = new UserModel()
                 {
-                    IdUser = Convert.ToInt32(reader["idUser"]),
-                    FirstName = reader["firstName"].ToString(),
-                    LastName = reader["lastName"].ToString(),
-                    Email = reader["email"].ToString()
+                    IdUser= Convert.ToInt32(reader["iduser"]),
+                    Email = reader["email"].ToString(),
+                    Password = reader["password"].ToString(),
+                    Salt = reader["salt"].ToString()
                 };
                 cnn.Close();
                 return User;
@@ -155,7 +155,9 @@ namespace Mercadona.Repository.User
                 SET 
                      firstName = @firstName,
                      lastName = @lastName,
-                     email = @email
+                     email = @email,
+                     password = @password,
+                     salt = @salt
                 WHERE 
                     idUser = @idUser
                 ";
@@ -166,6 +168,8 @@ namespace Mercadona.Repository.User
                 cmd.Parameters.AddWithValue("@firstName", user.FirstName);
                 cmd.Parameters.AddWithValue("@lastName", user.LastName);
                 cmd.Parameters.AddWithValue("@email", user.Email);
+                cmd.Parameters.AddWithValue("@password", user.Password);
+                cmd.Parameters.AddWithValue("@salt", user.Salt);
 
                 var nbRowEdited = cmd.ExecuteNonQuery();
 

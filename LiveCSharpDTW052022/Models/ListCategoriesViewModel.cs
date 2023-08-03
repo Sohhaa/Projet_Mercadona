@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mercadona.Models.Administration
+namespace Mercadona.Models
 {
     public class ListCategoriesViewModel
     {

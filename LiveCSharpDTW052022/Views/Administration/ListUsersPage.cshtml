@@ -29,12 +29,17 @@
 
                 @foreach (var user in Model.LstUsers)
                 {
+                    <form method="post" asp-controller="Administration" asp-action="EditUserPage">
+                        <input type="hidden" name="idUser" value="@user.IdUser" />
                     <tr style="text-align:center;">
                         <td style="font-weight:bold;padding:1px">@user.FirstName</td>
                         <td style="font-weight:bold;padding:1px">@user.LastName</td>
                         <td style="font-weight:bold;padding:1px">@user.Email</td>
-                        <td style="font-weight:bold;padding:3px"><a asp-controller="Administration" asp-action="EditUserPage" asp-route-idPromotion="@user.IdUser" style="font-weight:bold;" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
+                        <td style="font-weight:bold;padding:3px">
+                            <button type="submit" style="font-weight:bold;" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></button>
+                        </td>
                     </tr>
+                    </form>
                 }
 
             </tbody>

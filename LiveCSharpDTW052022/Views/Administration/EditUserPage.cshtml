@@ -13,18 +13,26 @@
 <div class="row">
     <div class="col-md-5">
         <form asp-controller="Administration" asp-action="EditUserAction">
-            <input type="hidden" asp-for="Promotion.IdUser" />
+            <input type="hidden" asp-for="User.IdUser" />
             <div class="form-group">
                 <label asp-for="User.FirstName">Prénom</label>
                 <input class="form-control" asp-for="User.FirstName">
+                <span asp-validation-for="User.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="User.LastName">Prénom</label>
                 <input class="form-control" asp-for="User.LastName">
+                <span asp-validation-for="User.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="User.Email">E-mail</label>
-                <input class="form-control datepicker" asp-for="User.Email">
+                <input class="form-control" asp-for="User.Email">
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Password">Mot de passe</label>
+                <input class="form-control" asp-for="User.Password">
+                <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
         
 

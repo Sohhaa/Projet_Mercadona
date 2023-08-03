@@ -10,7 +10,6 @@
         <button type="submit" class="btn btn-success">Créer une promotion</button>
     </form>
     </h1></div>
-
 <br />
 <div class="row">
     <h2> Promotions en cours </h2>
@@ -59,6 +58,37 @@
             <tbody>
 
                 @foreach (var promotion in Model.LstPromotionsTerminees)
+                {
+                    <tr style="text-align:center;">
+                        <td style="font-weight:bold;padding:1px">@promotion.Libelle</td>
+                        <td style="font-weight:bold;padding:1px">@promotion.Reduction %</td>
+                        <td style="font-weight:bold;padding:1px">@promotion.DateDebut</td>
+                        <td style="font-weight:bold;padding:1px">@promotion.DateFin</td>
+                        <td style="font-weight:bold;padding:3px"><a asp-controller="Administration" asp-action="EditPromotionPage" asp-route-idPromotion="@promotion.IdPromotion" style="font-weight:bold;" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<br />
+<div class="row">
+    <h2> Promotions à venir </h2>
+    <div class="col-md-12">
+        <table class="table table-striped" style="width:100%">
+            <thead>
+                <tr style="text-align:center;">
+                    <th scope="col">Nom de la promotion</th>
+                    <th scope="col">% réduction</th>
+                    <th scope="col">Date de début</th>
+                    <th scope="col">Date de fin</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var promotion in Model.LstPromotionsFutures)
                 {
                     <tr style="text-align:center;">
                         <td style="font-weight:bold;padding:1px">@promotion.Libelle</td>

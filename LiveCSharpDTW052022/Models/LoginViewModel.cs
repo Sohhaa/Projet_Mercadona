@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Mercadona.Models.Login
+namespace Mercadona.Models
 {
     public class LoginViewModel
     {
@@ -13,5 +13,7 @@ namespace Mercadona.Models.Login
         [Required(ErrorMessage = "Veuillez saisir un mot de passe.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        UserModel User { get; set; }
     }
 }

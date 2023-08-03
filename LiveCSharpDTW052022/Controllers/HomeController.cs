@@ -33,6 +33,7 @@ namespace Mercadona.Controllers
 
         public IActionResult Index()
         {
+
             var allProduits = _produitRepository.GetAllProduits();
             var allCategories = _categorieRepository.GetAllCategories();
             var allPromotions = _promotionRepository.GetAllPromotions();
@@ -41,7 +42,8 @@ namespace Mercadona.Controllers
             List<PromotionModel> LstPromotionsEnCoursWithProduit = new List<PromotionModel>();
             List<ProduitModel> LstProduitWithPromotion = new List<ProduitModel>();
 
-            DateTime dateDuJour = DateTime.Now;
+            DateTime now = DateTime.Now;
+            DateTime dateDuJour = now.Date;
 
             foreach (var promotionEnCours in allPromotions)
             {

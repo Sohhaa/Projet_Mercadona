@@ -11,8 +11,9 @@ namespace Mercadona.Repository.Promotion
 
         public PromotionModel GetPromotionById(int id);
 
-        public bool CreatePromotion(string libellePromotion, int reduction, string dateDebut, string dateFin);
+        public bool CreatePromotion(PromotionModel Promotion);
         public bool EditPromotion(PromotionModel Promotion);
         public bool DeletePromotion(int idPromotion);
+
     }
 }

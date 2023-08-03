@@ -279,5 +279,39 @@ namespace Mercadona.Repository.Produits
             }
         }
 
+        public bool RemoveExpiredPromotion(ProduitModel produit)
+        {
+            try
+            {
+                //je me connecte à la bdd
+                var cnn = OpenConnexion();
+                //Je crée une requête sql
+
+                string sql = @"
+                UPDATE produits
+                SET 
+                    idPromotion = @idPromotion
+                WHERE 
+                    idProduit = @idProduit
+                ";
+
+                //Executer la requête sql, donc créer une commande
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idProduit", produit.IdProduit);
+                cmd.Parameters.AddWithValue("@idPromotion", DBNull.Value);
+              
+                var nbRowEdited = cmd.ExecuteNonQuery();
+
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erreur : {e.Message}");
+                Console.WriteLine($"StackTrace : {e.StackTrace}");
+                return false;
+            }
+        }
+
     }
 }

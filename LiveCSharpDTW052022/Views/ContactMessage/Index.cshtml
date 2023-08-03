@@ -44,28 +44,35 @@
 <h2>Formulaire de contact</h2>
 
 
-<form asp-controller="ContactMessage" asp-action="SendContactMessage">
-    <div class="form-group">
-        <label asp-for="ContactMessage.FirstName">Votre Prénom</label>
-        <input class="form-control" asp-for="ContactMessage.FirstName">
-    </div>
-    <div class="form-group">
-        <label asp-for="ContactMessage.LastName">Votre nom</label>
-        <input class="form-control" asp-for="ContactMessage.LastName">
-    </div>
-    <div class="form-group">
-        <label asp-for="ContactMessage.Email">Votre e-mail</label>
-        <input class="form-control" asp-for="ContactMessage.Email">
-    </div>
-      <div class="form-group">
-        <label asp-for="ContactMessage.Message">Votre Message</label>
-        <input class="form-control" asp-for="ContactMessage.Message">
-    </div>
-   
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Envoyer le message</button>
-    </div>
-</form>
+    <form asp-controller="ContactMessage" asp-action="SendContactMessage">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="FirstName">Votre Prénom</label>
+            <input class="form-control" asp-for="FirstName">
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName">Votre nom</label>
+            <input class="form-control" asp-for="LastName">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email">Votre e-mail</label>
+            <input class="form-control" asp-for="Email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Message">Votre Message</label>
+            <input class="form-control" asp-for="Message">
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Envoyer le message</button>
+        </div>
+    </form>
+
+
 
 </div>
 

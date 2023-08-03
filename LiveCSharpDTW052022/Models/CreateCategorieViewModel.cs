@@ -2,12 +2,14 @@
 using Mercadona.Repository.Produits;
 using Mercadona.Repository.Promotion;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace Mercadona.Models.Administration
+namespace Mercadona.Models
 {
     public class CreateCategorieViewModel
     {
-        public string libelleCategorie { get; set; }
+
+        public CategorieModel NewCategorie { get; set; }
 
     }
 }

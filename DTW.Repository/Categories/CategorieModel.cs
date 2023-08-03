@@ -20,6 +20,7 @@ namespace Mercadona.Repository.Categorie
           
         }
         public int IdCategorie { get; set; }
+
         public string Libelle { get; set; }
 
     }

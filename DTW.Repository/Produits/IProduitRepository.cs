@@ -14,7 +14,8 @@ namespace Mercadona.Repository.Produits
         public bool DeleteProduit(int idProduit);
         public bool CreateProduit(ProduitModel produit, int? idPromotion);
 
-        //public bool EditProduit(ProduitModel produit);
-        //public bool DeleteProduit(int id);
+        public bool RemoveExpiredPromotion(ProduitModel produit);
+
+
     }
 }

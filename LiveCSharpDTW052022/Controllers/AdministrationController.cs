@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Mercadona.Repository.User;
-using Mercadona.Models.Administration;
 using Mercadona.Models;
+using Mercadona.Utilities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Mercadona.Controllers
 {
@@ -34,13 +35,16 @@ namespace Mercadona.Controllers
             var allProduits = _produitRepository.GetAllProduits();
             var allCategories = _categorieRepository.GetAllCategories();
             var allPromotions = _promotionRepository.GetAllPromotions();
+            var allUsers = _userRepository.GetAllUsers();
 
             int nombreTotalProduits = allProduits.Count();
             int nombreTotalCategories = allCategories.Count();
+            int nombreTotalUsers = allUsers.Count();
 
             List<PromotionModel> LstPromotionsEnCours = new List<PromotionModel>();
 
-            DateTime dateDuJour = DateTime.Now;
+            DateTime now = DateTime.Now;
+            DateTime dateDuJour = now.Date;
 
             foreach (var promotionEnCours in allPromotions)
             {
@@ -59,7 +63,8 @@ namespace Mercadona.Controllers
             {
                 NombreTotalProduits = nombreTotalProduits,
                 NombreTotalCategories = nombreTotalCategories,
-                NombreTotalPromotionsEnCours = nombreTotalPromotionsEnCours
+                NombreTotalPromotionsEnCours = nombreTotalPromotionsEnCours,
+                NombreTotalUsers = nombreTotalUsers
             };
             return View(vm);
         }
@@ -246,18 +251,26 @@ namespace Mercadona.Controllers
         {
 
             var editCategorie = _categorieRepository.GetCategorieById(idCategorie);
+            string actualCategorie = editCategorie.Libelle;
 
             EditCategorieViewModel vm = new EditCategorieViewModel()
             {
-                Categorie = editCategorie
+                Categorie = editCategorie,
+                ActualCategorie = actualCategorie
             };
 
             return View(vm);
         }
 
-        public IActionResult CreateCategoriePage(CreateCategorieViewModel vm)
+        public IActionResult CreateCategoriePage()
         {
-            
+            var newCategorie = new CategorieModel();
+
+            CreateCategorieViewModel vm = new CreateCategorieViewModel()
+            {
+                NewCategorie = newCategorie
+            };
+
             return View(vm);
         }
 
@@ -301,7 +314,7 @@ namespace Mercadona.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCategorieAction(CreateCategorieViewModel vm, string libelleCategorie)
+        public IActionResult CreateCategorieAction(CreateCategorieViewModel vm)
         {
             if (!ModelState.IsValid)
             {
@@ -309,11 +322,11 @@ namespace Mercadona.Controllers
                 return View("CreateCategoriePage", vm);
             }
 
-            bool isOk = _categorieRepository.CreateCategorie(libelleCategorie);
+            bool isOk = _categorieRepository.CreateCategorie(vm.NewCategorie.Libelle);
 
             if (isOk)
             {
-                TempData["MessageValidation"] = "Le produit a bien été créé";
+                TempData["MessageValidation"] = "La catégorie a bien été créée";
                 return RedirectToAction("ListCategoriesPage");
             }
             else
@@ -329,8 +342,11 @@ namespace Mercadona.Controllers
 
             List<PromotionModel> allPromotionsEnCours = new List<PromotionModel>();
             List<PromotionModel> allPromotionsTerminees = new List<PromotionModel>();
+            List<PromotionModel> allPromotionsFutures = new List<PromotionModel>();
 
-            DateTime dateDuJour = DateTime.Now;
+
+            DateTime now = DateTime.Now;
+            DateTime dateDuJour = now.Date;
 
             foreach (var promotion in allPromotions)
             {
@@ -342,6 +358,10 @@ namespace Mercadona.Controllers
                 {
                     allPromotionsEnCours.Add(promotion);
                 }
+                else if (dateDebutPromo >= dateDuJour)
+                {
+                    allPromotionsFutures.Add(promotion);
+                }
                 else
                 {
                     allPromotionsTerminees.Add(promotion);
@@ -351,7 +371,8 @@ namespace Mercadona.Controllers
             ListPromotionsViewModel vm = new ListPromotionsViewModel()
             {
                 LstPromotionsEnCours = allPromotionsEnCours,
-                LstPromotionsTerminees = allPromotionsTerminees
+                LstPromotionsTerminees = allPromotionsTerminees,
+                LstPromotionsFutures = allPromotionsFutures
             };
            
 
@@ -372,8 +393,14 @@ namespace Mercadona.Controllers
             return View(vm);
         }
 
-        public IActionResult CreatePromotionPage(CreatePromotionViewModel vm)
+        public IActionResult CreatePromotionPage()
         {
+            var promotion = new PromotionModel();
+
+            CreatePromotionViewModel vm = new CreatePromotionViewModel()
+            {
+                Promotion = promotion
+            };
 
             return View(vm);
         }
@@ -418,7 +445,7 @@ namespace Mercadona.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePromotionAction(CreatePromotionViewModel vm, string libellePromotion, int reduction, string dateDebut, string dateFin)
+        public IActionResult CreatePromotionAction(CreatePromotionViewModel vm)
         {
             if (!ModelState.IsValid)
             {
@@ -426,7 +453,7 @@ namespace Mercadona.Controllers
                 return View("CreatePromotionPage", vm);
             }
 
-            bool isOk = _promotionRepository.CreatePromotion(libellePromotion, reduction, dateDebut, dateFin);
+            bool isOk = _promotionRepository.CreatePromotion(vm.Promotion);
 
             if (isOk)
             {
@@ -480,7 +507,13 @@ namespace Mercadona.Controllers
         [HttpPost]
         public IActionResult DeleteUserAction(EditUserViewModel vm)
         {
+
+            if(vm.User.IdUser != 1) { 
             bool isOk = _userRepository.DeleteUser(vm.User.IdUser);
+
+
+
+
 
             if (isOk)
             {
@@ -489,6 +522,13 @@ namespace Mercadona.Controllers
             }
             else
             {
+                vm.User = _userRepository.GetUserById(vm.User.IdUser);
+                return View("EditUserPage", vm);
+            }
+            }
+            else
+            {
+                TempData["MessageValidation"] = "L'utilisateur ne peut pas être supprimé";
                 vm.User = _userRepository.GetUserById(vm.User.IdUser);
                 return View("EditUserPage", vm);
             }
@@ -504,6 +544,14 @@ namespace Mercadona.Controllers
                 TempData["MessageErreur"] = "Erreur";
                 return View("EditUserPage", vm);
             }
+
+            var passwordHasher = new PasswordHasher();
+            string salt;
+            string hashedPassword = passwordHasher.HashPassword(vm.User.Password, out salt);
+
+            vm.User.Password = hashedPassword;
+            vm.User.Salt = salt;
+
             bool isOk = _userRepository.EditUser(vm.User);
 
             if (isOk)
@@ -525,6 +573,28 @@ namespace Mercadona.Controllers
                 TempData["MessageErreur"] = "Erreur";
                 return View("CreateUserPage", vm);
             }
+
+            List<UserModel> allUsers = _userRepository.GetAllUsers();
+
+            bool sameEmail = false;
+
+            foreach(UserModel user in allUsers)
+            {
+                if (vm.User.Email == user.Email)
+                {
+                    sameEmail = true;
+                }
+            }
+
+            if (!sameEmail) { 
+            var passwordHasher = new PasswordHasher();
+
+            string salt;
+            string hashedPassword = passwordHasher.HashPassword(vm.User.Password, out salt);
+
+            vm.User.Password = hashedPassword;
+            vm.User.Salt = salt;
+
             bool isOk = _userRepository.CreateUser(vm.User);
 
             if (isOk)
@@ -535,6 +605,12 @@ namespace Mercadona.Controllers
             else
             {
                 return View("CreateUserPage", vm);
+            }
+            }
+            else
+            {
+                TempData["MessageErreur"] = "Cet adresse email existe déjà";
+                return RedirectToAction("CreateUserPage", vm);
             }
         }
 

@@ -4,7 +4,7 @@
 
 }
 
-<h1>Modifier la catégorie : @Model.Categorie.Libelle</h1>
+<h1>Modifier la catégorie : @Model.ActualCategorie</h1>
 
 @*<div style="color:red" class="validation-summary-errors">
     @Html.ValidationSummary()
@@ -13,10 +13,12 @@
 <div class="row">
     <div class="col-md-5">
         <form asp-controller="Administration" asp-action="EditCategorieAction">
+            <input type="hidden" asp-for="@Model.ActualCategorie" />
             <input type="hidden" asp-for="Categorie.IdCategorie" />
             <div class="form-group">
                 <label asp-for="Categorie.Libelle">Nom de la catégorie</label>
                 <input class="form-control" asp-for="Categorie.Libelle">
+                <span asp-validation-for="Categorie.Libelle" class="text-danger"></span>
             </div>
           
             <button type="submit" class="btn btn-primary">Modifier la catégorie</button>

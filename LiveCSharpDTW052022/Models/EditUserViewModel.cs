@@ -1,7 +1,7 @@
 ﻿using Mercadona.Repository.User;
 using System.Collections.Generic;
 
-namespace Mercadona.Models.Administration
+namespace Mercadona.Models
 {
     public class EditUserViewModel
     {
