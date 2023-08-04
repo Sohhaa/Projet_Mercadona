@@ -347,3 +347,10 @@ h2 {
    padding-top: 0%;
 }
 
+.toast-header {
+    border-color: #3E9D6F;
+}
+
+.toast {
+    border-color: #3E9D6F;
+}

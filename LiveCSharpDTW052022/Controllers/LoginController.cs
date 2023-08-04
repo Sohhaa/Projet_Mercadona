@@ -36,13 +36,17 @@ namespace Mercadona.Controllers
         [HttpPost]
         public async Task<ActionResult> ConnectUser(LoginViewModel model)
         {
+            if (IpBlocker.IsIpBlocked(Request.HttpContext.Connection.RemoteIpAddress.ToString()))
+            {
+                
+                TempData["MessageValidation"] = "Votre adresse IP est bloquée en raison de tentatives infructueuses répétées. Réessayez plus tard.";
+                return View("Index");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View("Index");
             }
-
-
-
 
             // Vérifier l'authentification de l'utilisateur
             UserModel user = _userRepository.GetUserByEmail(model.Email);
@@ -67,6 +71,8 @@ namespace Mercadona.Controllers
                     {
                         UserModel CurrentUser = _userRepository.GetUserById(user.IdUser);
                         HttpContext.Session.SetObject("CurrentUser", CurrentUser);
+                        // Authentification réussie, réinitialiser les tentatives infructueuses
+                        IpBlocker.ResetFailedAttempts(Request.HttpContext.Connection.RemoteIpAddress.ToString());
 
                         // Maintenant, authentifions l'utilisateur et créons un cookie d'authentification
                         var claims = new List<Claim>
@@ -84,6 +90,9 @@ namespace Mercadona.Controllers
                     }
                     else
                     {
+                        // Augmenter le compteur de tentatives infructueuses
+                        IpBlocker.AddFailedAttempt(Request.HttpContext.Connection.RemoteIpAddress.ToString());
+
                         ModelState.AddModelError("", "Identifiants invalides.");
                         return View("Index");
                     }

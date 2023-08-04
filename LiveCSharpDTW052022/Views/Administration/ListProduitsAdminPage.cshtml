@@ -1,7 +1,9 @@
-﻿@model ListProduitsAdminViewModel
+﻿@using System.Globalization
+@model ListProduitsAdminViewModel
 
 @{
-
+    DateTime now = DateTime.Now;
+    DateTime dateDuJour = now.Date;
 
 }
 <div style="display:flex; justify-content:space-between;">
@@ -29,11 +31,22 @@
 
         @foreach (var produit in Model.LstProduits)
         {
+            bool promoEnCours = false;
+
+            @if (produit.Promotion != null)
+            { 
+                DateTime dateDebutPromo = DateTime.ParseExact(produit.Promotion.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dateFinPromo = DateTime.ParseExact(produit.Promotion.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                @if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)
+                {
+                    promoEnCours = true;
+                }
+            }
             <tr>
                 <td class=""><img style="width:50px;height:50px"  src="@produit.Image"></td>
                 <td style="font-weight:bold">@produit.Libelle</td>
                 <td>@produit.Description</td>
-                @if (produit.Promotion !=null)
+                @if (promoEnCours)
                 {
                     float PrixAvecReduction = (float)Math.Round((@produit.Prix - (@produit.Prix * @produit.Promotion.Reduction) / 100), 2);
                     <td>
@@ -44,12 +57,15 @@
                 <td>@produit.Prix €</td>
                 }
                 <td>@produit.Categorie.Libelle</td>
-                @if (produit.Promotion != null){
+
+                @if (promoEnCours)
+                {
                 <td><span style="color:red;font-weight:bold">@produit.Promotion.Libelle - @produit.Promotion.Reduction %</span><br/>
                     Du @produit.Promotion.DateDebut au @produit.Promotion.DateFin</td>
-                }else{
-                    <td>Aucune promotion en cours</td>
-                }
+                }else
+                    {
+                        <td>Aucune promotion en cours</td>
+                    }
                 <td><a asp-controller="Administration" asp-action="EditProduitPage" asp-route-idProduit="@produit.IdProduit" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
                 <td><a asp-controller="Administration" asp-action="AddPromotionProduitPage" asp-route-idProduit="@produit.IdProduit" class="btn btn-info btn-promo float-right"><i class="fa-solid fa-percent"></i></a></td>
             </tr>

@@ -37,7 +37,8 @@ namespace Mercadona.Repository.Produits
                     promo.reduction
                 FROM produits p
                 LEFT JOIN categories c ON p.idCategorie = c.idCategorie
-                LEFT JOIN promotions promo ON p.idPromotion = promo.idPromotion;
+                LEFT JOIN promotions promo ON p.idPromotion = promo.idPromotion
+                ORDER BY promo.dateDebut DESC;
 
                 ";
 

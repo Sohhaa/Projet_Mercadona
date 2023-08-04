@@ -69,26 +69,13 @@ namespace Mercadona.Controllers
             return View(vm);
         }
 
-        public IActionResult ListProduitsAdminPage(int perPage = 12, int nbPage = 1, string search = "")
+        public IActionResult ListProduitsAdminPage(int perPage = 12, int nbPage = 1)
         {
 
             var allproduits = _produitRepository.GetAllProduits();
 
-            if (string.IsNullOrWhiteSpace(search) == false)
-            {
-                allproduits = allproduits.Where(produit =>
-                        produit.Libelle.Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
-                        produit.Description.Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
-                        produit.Categorie.Libelle.Contains(search, StringComparison.InvariantCultureIgnoreCase))
-                        .ToList();
-            }
-
-
             int nbProduitsTotal = allproduits.Count();
 
-            //Faire ma pagination
-            // LINQ : Take pour prendre un certain nombre d'éléments
-            // LINQ : Skip pour passer un certain nombre d'éléments
             allproduits = allproduits.Skip(perPage * (nbPage - 1))
                                 .Take(perPage)
                                 .ToList();
@@ -99,7 +86,6 @@ namespace Mercadona.Controllers
                 NbProduitsTotalBdd = nbProduitsTotal,
                 NbPage = nbPage,
                 PerPage = perPage,
-                Recherche = search
             };
 
             return View(vm);
