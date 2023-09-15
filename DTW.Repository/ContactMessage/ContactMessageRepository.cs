@@ -28,7 +28,7 @@ namespace Mercadona.Repository.ContactMessage
 
                 //Executer la requête sql, donc créer une commande
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
-                cmd.Parameters.AddWithValue("@nom", ContactMessage.FirstName);
+                cmd.Parameters.AddWithValue("@prenom", ContactMessage.FirstName);
                 cmd.Parameters.AddWithValue("@nom", ContactMessage.LastName);
                 cmd.Parameters.AddWithValue("@email", ContactMessage.Email);
                 cmd.Parameters.AddWithValue("@message", ContactMessage.Message);
