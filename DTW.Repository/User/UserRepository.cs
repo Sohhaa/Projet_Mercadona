@@ -3,6 +3,7 @@ using Mercadona.Repository.Produits;
 using Mercadona.Repository.User;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +35,8 @@ namespace Mercadona.Repository.User
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             var reader = cmd.ExecuteReader();
             var LstUsers = new List<UserModel>();
 
@@ -75,7 +77,8 @@ namespace Mercadona.Repository.User
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@email", Email);
             var reader = cmd.ExecuteReader();
             UserModel User = null;
@@ -119,7 +122,8 @@ namespace Mercadona.Repository.User
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@userId", userId);
             var reader = cmd.ExecuteReader();
             UserModel User = null;
@@ -163,7 +167,8 @@ namespace Mercadona.Repository.User
                 ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idUser", user.IdUser);
                 cmd.Parameters.AddWithValue("@firstName", user.FirstName);
                 cmd.Parameters.AddWithValue("@lastName", user.LastName);
@@ -200,7 +205,8 @@ namespace Mercadona.Repository.User
                     ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idUser", idUser);
 
                 var nbRowEdited = cmd.ExecuteNonQuery();
@@ -227,7 +233,8 @@ namespace Mercadona.Repository.User
                         (@firstname, @lastname, @email, @password, @salt)";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@firstname", User.FirstName);
                 cmd.Parameters.AddWithValue("@lastname", User.LastName);
                 cmd.Parameters.AddWithValue("@email", User.Email);

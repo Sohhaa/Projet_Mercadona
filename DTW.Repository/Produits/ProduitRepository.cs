@@ -3,6 +3,7 @@ using Mercadona.Repository.config;
 using Mercadona.Repository.Promotion;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -43,7 +44,8 @@ namespace Mercadona.Repository.Produits
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             var reader = cmd.ExecuteReader();
             var listeProduits = new List<ProduitModel>();
 
@@ -65,8 +67,8 @@ namespace Mercadona.Repository.Produits
                         IdPromotion = Convert.ToInt32(reader["idPromotion"]),
                         Libelle = reader["promotionLibelle"].ToString(),
                         Reduction = Convert.ToInt32(reader["reduction"]),
-                        DateDebut = reader["dateDebut"].ToString(),
-                        DateFin = reader["dateFin"].ToString()
+                        DateDebut = Convert.ToDateTime(reader["dateDebut"].ToString()).ToString(),
+                        DateFin = Convert.ToDateTime(reader["dateFin"].ToString()).ToString(),
                     };
                 }
 
@@ -114,7 +116,8 @@ namespace Mercadona.Repository.Produits
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@idProduit", idProduit);
             var reader = cmd.ExecuteReader();
             ProduitModel myProduit = null;
@@ -179,7 +182,8 @@ namespace Mercadona.Repository.Produits
                 ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idProduit", produit.IdProduit);
                 cmd.Parameters.AddWithValue("@libelle", produit.Libelle);
                 cmd.Parameters.AddWithValue("@description", produit.Description);
@@ -225,7 +229,8 @@ namespace Mercadona.Repository.Produits
                     ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idProduit", idProduit);
 
                 var nbRowEdited = cmd.ExecuteNonQuery();
@@ -252,7 +257,8 @@ namespace Mercadona.Repository.Produits
                         (@libelle, @description, @prix, @image, @idCategorie, @idPromotion)";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@libelle", Produit.Libelle);
                 cmd.Parameters.AddWithValue("@description", Produit.Description);
                 cmd.Parameters.AddWithValue("@prix", Produit.Prix);
@@ -297,7 +303,8 @@ namespace Mercadona.Repository.Produits
                 ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idProduit", produit.IdProduit);
                 cmd.Parameters.AddWithValue("@idPromotion", DBNull.Value);
               

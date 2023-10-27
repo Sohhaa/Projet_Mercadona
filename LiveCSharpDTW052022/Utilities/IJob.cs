@@ -46,8 +46,8 @@ namespace Mercadona.Utilities
 
             foreach (var promotion in allPromotions)
             {
-                DateTime dateDebutPromo = DateTime.ParseExact(promotion.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                DateTime dateFinPromo = DateTime.ParseExact(promotion.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dateDebutPromo = DateTime.ParseExact(promotion.DateDebut, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+                DateTime dateFinPromo = DateTime.ParseExact(promotion.DateFin, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
 
 
                 if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)
