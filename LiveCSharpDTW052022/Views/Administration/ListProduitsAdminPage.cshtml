@@ -35,8 +35,8 @@
 
             @if (produit.Promotion != null)
             { 
-                DateTime dateDebutPromo = DateTime.ParseExact(produit.Promotion.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                DateTime dateFinPromo = DateTime.ParseExact(produit.Promotion.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dateDebutPromo = DateTime.ParseExact(produit.Promotion.DateDebut, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+                DateTime dateFinPromo = DateTime.ParseExact(produit.Promotion.DateFin, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
                 @if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)
                 {
                     promoEnCours = true;
@@ -61,7 +61,9 @@
                 @if (promoEnCours)
                 {
                 <td><span style="color:red;font-weight:bold">@produit.Promotion.Libelle - @produit.Promotion.Reduction %</span><br/>
-                    Du @produit.Promotion.DateDebut au @produit.Promotion.DateFin</td>
+                        Du @DateTime.ParseExact(produit.Promotion.DateDebut, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")
+                        au @DateTime.ParseExact(produit.Promotion.DateFin, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")
+                    </td>
                 }else
                     {
                         <td>Aucune promotion en cours</td>

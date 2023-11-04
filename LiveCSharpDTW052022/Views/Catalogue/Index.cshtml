@@ -54,8 +54,8 @@
 
         if (produit.Promotion != null)
         {
-            DateTime dateDebutPromo = DateTime.ParseExact(produit.Promotion.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            DateTime dateFinPromo = DateTime.ParseExact(produit.Promotion.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            DateTime dateDebutPromo = DateTime.ParseExact(produit.Promotion.DateDebut, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+            DateTime dateFinPromo = DateTime.ParseExact(produit.Promotion.DateFin, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
 
 
             if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)
@@ -80,7 +80,10 @@
                         <div class="promo">-@produit.Promotion.Reduction&nbsp;%</div>
                     <div class="badge detailPromo">    
                             <h7 class="nomPromo">@produit.Promotion.Libelle</h7><br>
-                        <h7 class="datePromo">Promotion du @produit.Promotion.DateDebut au @produit.Promotion.DateFin</h7>
+                            <h7 class="datePromo">
+                                Promotion du du @DateTime.ParseExact(produit.Promotion.DateDebut, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")
+                                au @DateTime.ParseExact(produit.Promotion.DateFin, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")
+                            </h7>
                         </div>
                     }else{
                         <h5 class="card-title text-right pr-3 prix">@produit.Prix €</h5>

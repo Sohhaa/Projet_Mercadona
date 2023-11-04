@@ -48,8 +48,8 @@ namespace Mercadona.Controllers
 
             foreach (var promotionEnCours in allPromotions)
             {
-                    DateTime dateDebutPromo = DateTime.ParseExact(promotionEnCours.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                    DateTime dateFinPromo = DateTime.ParseExact(promotionEnCours.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    DateTime dateDebutPromo = DateTime.ParseExact(promotionEnCours.DateDebut, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+                    DateTime dateFinPromo = DateTime.ParseExact(promotionEnCours.DateFin, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
 
                     if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)
                     {
@@ -336,8 +336,8 @@ namespace Mercadona.Controllers
 
             foreach (var promotion in allPromotions)
             {
-                DateTime dateDebutPromo = DateTime.ParseExact(promotion.DateDebut, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                DateTime dateFinPromo = DateTime.ParseExact(promotion.DateFin, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dateDebutPromo = DateTime.ParseExact(promotion.DateDebut, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+                DateTime dateFinPromo = DateTime.ParseExact(promotion.DateFin, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
 
 
                 if (dateDuJour >= dateDebutPromo && dateDuJour <= dateFinPromo)

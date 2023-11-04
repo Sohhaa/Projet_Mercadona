@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,17 +19,31 @@ namespace Mercadona.Repository.config
             ConectionString = builder.ConnectionString + ";";
         }
 
-        public MySqlConnection OpenConnexion()
+        //public MySqlConnection OpenConnexion()
+        //{
+        //    try
+        //    {
+        //        MySqlConnection cnn = new MySqlConnection(ConectionString);
+        //        cnn.Open();
+        //        return cnn;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        throw new Exception("Impossible de se connecter à la base de données"+ex);
+        //    }
+        //}
+
+        public NpgsqlConnection OpenConnexion()
         {
             try
             {
-                MySqlConnection cnn = new MySqlConnection(ConectionString);
+                NpgsqlConnection cnn = new NpgsqlConnection(ConectionString);
                 cnn.Open();
                 return cnn;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("Impossible de se connecter à la base de données"+ex);
+                throw new Exception("Impossible de se connecter à la base de données" + ex);
             }
         }
     }

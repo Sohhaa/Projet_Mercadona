@@ -3,6 +3,7 @@ using Mercadona.Repository.config;
 using Mercadona.Repository.Promotion;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +35,8 @@ namespace Mercadona.Repository.Promotion
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             var reader = cmd.ExecuteReader();
             var listePromotion = new List<PromotionModel>();
 
@@ -77,7 +79,8 @@ namespace Mercadona.Repository.Promotion
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@idPromotion", idPromotion);
             var reader = cmd.ExecuteReader();
             PromotionModel maPromotion = null;
@@ -112,7 +115,8 @@ namespace Mercadona.Repository.Promotion
                         (@libellePromotion, @reduction, @dateDebut, @dateFin)";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@libellePromotion", Promotion.Libelle);
                 cmd.Parameters.AddWithValue("@reduction", Promotion.Reduction);
                 cmd.Parameters.AddWithValue("@dateDebut", Promotion.DateDebut);
@@ -147,7 +151,8 @@ namespace Mercadona.Repository.Promotion
                 ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idPromotion", Promotion.IdPromotion);
                 cmd.Parameters.AddWithValue("@libellePromotion", Promotion.Libelle);
                 cmd.Parameters.AddWithValue("@Reduction", Promotion.Reduction);
@@ -181,7 +186,8 @@ namespace Mercadona.Repository.Promotion
                     ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idPromotion", idPromotion);
 
                 var nbRowEdited = cmd.ExecuteNonQuery();

@@ -2,6 +2,7 @@
 using Mercadona.Repository.ContactMessage;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +28,8 @@ namespace Mercadona.Repository.ContactMessage
                         (@prenom,@nom, @email, @message)";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@prenom", ContactMessage.FirstName);
                 cmd.Parameters.AddWithValue("@nom", ContactMessage.LastName);
                 cmd.Parameters.AddWithValue("@email", ContactMessage.Email);

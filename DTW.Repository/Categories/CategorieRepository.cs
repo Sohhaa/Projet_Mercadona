@@ -2,6 +2,7 @@
 using Mercadona.Repository.Produits;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 
@@ -30,7 +31,8 @@ namespace Mercadona.Repository.Categorie
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             var reader = cmd.ExecuteReader();
             var listeCategories = new List<CategorieModel>();
 
@@ -67,7 +69,8 @@ namespace Mercadona.Repository.Categorie
                 ";
 
             //Executer la requête sql, donc créer une commande
-            MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
             var reader = cmd.ExecuteReader();
             CategorieModel Categorie = null;
@@ -99,7 +102,8 @@ namespace Mercadona.Repository.Categorie
                         (@libelleCategorie)";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@libelleCategorie", libelleCategorie);
 
                 var reader = cmd.ExecuteNonQuery();
@@ -130,7 +134,8 @@ namespace Mercadona.Repository.Categorie
                 ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idCategorie", Categorie.IdCategorie);
                 cmd.Parameters.AddWithValue("@libelleCategorie", Categorie.Libelle);
 
@@ -163,7 +168,8 @@ namespace Mercadona.Repository.Categorie
                     ";
 
                 //Executer la requête sql, donc créer une commande
-                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                //MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
 
                 var nbRowEdited = cmd.ExecuteNonQuery();

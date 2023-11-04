@@ -1,4 +1,5 @@
-﻿@model ListPromotionsViewModel
+﻿@using System.Globalization;
+@model ListPromotionsViewModel
 
 @{
 
@@ -31,8 +32,8 @@
                     <tr style ="text-align:center;">
                         <td style="font-weight:bold;padding:1px">@promotion.Libelle</td>
                         <td style="font-weight:bold;padding:1px">@promotion.Reduction %</td>
-                        <td style="font-weight:bold;padding:1px">@promotion.DateDebut</td>
-                        <td style="font-weight:bold;padding:1px">@promotion.DateFin</td>
+                        <td style="font-weight:bold;padding:1px">@DateTime.ParseExact(promotion.DateDebut, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")</td>
+                        <td style="font-weight:bold;padding:1px">@DateTime.ParseExact(promotion.DateFin, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")</td>
                         <td style="font-weight:bold;padding:3px"><a asp-controller="Administration" asp-action="EditPromotionPage" asp-route-IdPromotion="@promotion.IdPromotion" style="font-weight:bold;" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
                     </tr>
                 }
@@ -62,8 +63,8 @@
                     <tr style="text-align:center;">
                         <td style="font-weight:bold;padding:1px">@promotion.Libelle</td>
                         <td style="font-weight:bold;padding:1px">@promotion.Reduction %</td>
-                        <td style="font-weight:bold;padding:1px">@promotion.DateDebut</td>
-                        <td style="font-weight:bold;padding:1px">@promotion.DateFin</td>
+                        <td style="font-weight:bold;padding:1px">@DateTime.ParseExact(promotion.DateDebut, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")</td>
+                        <td style="font-weight:bold;padding:1px">@DateTime.ParseExact(promotion.DateFin, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")</td>
                         <td style="font-weight:bold;padding:3px"><a asp-controller="Administration" asp-action="EditPromotionPage" asp-route-idPromotion="@promotion.IdPromotion" style="font-weight:bold;" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
                     </tr>
                 }
@@ -93,8 +94,8 @@
                     <tr style="text-align:center;">
                         <td style="font-weight:bold;padding:1px">@promotion.Libelle</td>
                         <td style="font-weight:bold;padding:1px">@promotion.Reduction %</td>
-                        <td style="font-weight:bold;padding:1px">@promotion.DateDebut</td>
-                        <td style="font-weight:bold;padding:1px">@promotion.DateFin</td>
+                        <td style="font-weight:bold;padding:1px">@DateTime.ParseExact(promotion.DateDebut, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")</td>
+                        <td style="font-weight:bold;padding:1px">@DateTime.ParseExact(promotion.DateFin, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")</td>
                         <td style="font-weight:bold;padding:3px"><a asp-controller="Administration" asp-action="EditPromotionPage" asp-route-idPromotion="@promotion.IdPromotion" style="font-weight:bold;" class="btn btn-info float-right"><i class="fa-solid fa-screwdriver-wrench"></i></a></td>
                     </tr>
                 }

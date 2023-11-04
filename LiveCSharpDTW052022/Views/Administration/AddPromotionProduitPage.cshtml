@@ -1,4 +1,5 @@
-﻿@model EditProduitViewModel
+﻿@using System.Globalization;
+@model EditProduitViewModel
 
 @{
 
@@ -31,7 +32,10 @@
                         if(Model.Produit.Promotion != null){
                             <option selected="@(promotion.IdPromotion == Model.Produit.Promotion.IdPromotion)" value="@promotion.IdPromotion">@promotion.Libelle - <span style="color:red;font-weight:bold">@promotion.Reduction %</span> - du @promotion.DateDebut au @promotion.DateFin</option>
                         }else{
-                            <option value="@promotion.IdPromotion">@promotion.Libelle - <span style="color:red;font-weight:bold">@promotion.Reduction %</span> - du @promotion.DateDebut au @promotion.DateFin</option>
+                            <option value="@promotion.IdPromotion">
+                                @promotion.Libelle - <span style="color:red;font-weight:bold">@promotion.Reduction %</span> - du @DateTime.ParseExact(promotion.DateDebut, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")
+                                au @DateTime.ParseExact(promotion.DateFin, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")
+                            </option>
                         }
                     }
                 </select>
