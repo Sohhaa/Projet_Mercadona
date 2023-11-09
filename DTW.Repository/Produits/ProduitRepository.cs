@@ -39,8 +39,12 @@ namespace Mercadona.Repository.Produits
                 FROM produits p
                 LEFT JOIN categories c ON p.idCategorie = c.idCategorie
                 LEFT JOIN promotions promo ON p.idPromotion = promo.idPromotion
-                ORDER BY promo.dateDebut DESC;
-
+                ORDER BY
+                    CASE
+                        WHEN promo.idPromotion IS NOT NULL THEN 0
+                        ELSE 1
+                    END,
+                    promo.idPromotion
                 ";
 
             //Executer la requête sql, donc créer une commande

@@ -22,7 +22,7 @@ namespace Mercadona.Repository.Promotion
             //je me connecte à la bdd
             var cnn = OpenConnexion();
             //Je crée une requête sql
-            
+
             string sql = @"
                 SELECT 
                     promo.idPromotion, 
@@ -32,7 +32,7 @@ namespace Mercadona.Repository.Promotion
                     promo.reduction
                 FROM 
                     promotions promo
-                ";
+            ";
 
             //Executer la requête sql, donc créer une commande
             //MySqlCommand cmd = new MySqlCommand(sql, cnn);

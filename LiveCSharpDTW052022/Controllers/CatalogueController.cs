@@ -26,7 +26,7 @@ namespace Mercadona.Controllers
             //_categorieRepository = categorieRepository;
         }
 
-        public IActionResult Index(int perPage = 12, int nbPage = 1, int filtreCategorie = 0)
+        public IActionResult Index(int perPage = 20, int nbPage = 1, int filtreCategorie = 0)
         {
             var allProduits = _produitRepository.GetAllProduits();
             var allCategories = _categorieRepository.GetAllCategories();
